@@ -10,10 +10,11 @@ void main ( )
     comPlex *Z = new comPlex();
     double r , i;
     printf ( "Enter real and image parts of complex: " );           // действительная и мнимая части
-    scanf_s ( "%f" , &r , &i);
+    scanf_s ( "%lf%lf" , &r , &i);
     Z->real ( r );
-
-
+    Z->image ( i );
+    printf ( "%lf\n" , Z->mod ( ) );
+    _getch ( );
     return ;
 }
 
