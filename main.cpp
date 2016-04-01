@@ -9,12 +9,26 @@ void main ( )
 {
     comPlex *Z = new comPlex();
     double r , i;
-    printf ( "Enter real and image parts of complex: " );           // действительная и мнимая части
-    scanf_s ( "%lf%lf" , &r , &i);
-    Z->real ( r );
-    Z->image ( i );
-    printf ( "%lf\n" , Z->mod ( ) );
-    _getch ( );
+    do
+    {
+        system ( "cls" );
+        cout << "Enter real part of complex number Z: Re= " ;            // действительная часть
+        cin >> r;
+        cout << "Enter image part of complex number Z: Im= " ;         // мнимая часть
+        cin >> i;
+        cout << endl;
+        if ( r == 0 && i == 0 )
+        {
+            cout << "Module |Z| is 0 " << endl;
+            cout << "ARGUMENT IS NOT DEFINED!!!" << endl; 
+            _getch ( );
+            return ;
+        }
+        Z -> real ( r );
+        Z -> image ( i );
+        cout << "Module |Z| is ..." << Z -> mod() << endl;
+        cout << "Argument arg Z is ..." << Z -> arg() * 180 / Z -> pi << endl;
+        _getch ( );
+    } while ( 1 );
     return ;
 }
-

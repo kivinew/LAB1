@@ -1,33 +1,41 @@
 #include "comPlex.h"
 
-comPlex::comPlex ( )
+comPlex::comPlex ( )                                                // конструктор
 {
     re = 0;
     im = 0;
 }
 
-comPlex::~comPlex ( )
-{
-}
-
-void comPlex::real ( double Real )                                   // действительная часть 
+void comPlex::real ( double Real )                                  // действительная часть 
 {
     re = Real;
     return;
 }
 
-void comPlex::image ( double Image )                                 // мнимая часть 
+void comPlex::image ( double Image )                                // мнимая часть 
 {
     im = Image;
     return;
 }
 
-double comPlex::mod ( )
+double comPlex::mod ( )                                             // модуль
 {
     return sqrt ( re*re + im*im );
 }
 
-double comPlex::arg ( )
+double comPlex::arg ( )                                             // аргумент
 {
-    return 0.0;
+    if ( re > 0 ) return atan ( im / re );
+    if ( re < 0 ) 
+    {
+        if ( im > 0 ) return pi + atan ( im / re );
+        if ( im < 0 ) return -pi + atan ( im / re );
+        if ( im == 0 ) return pi;
+    }
+    if ( re == 0 )
+    {
+        if ( im > 0 ) return pi / 2;
+        if ( im < 0 ) return -pi / 2;
+    }
+    return 0;
 }
