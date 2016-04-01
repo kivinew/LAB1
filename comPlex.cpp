@@ -1,9 +1,14 @@
 #include "comPlex.h"
 
-comPlex::comPlex ( )                                                // конструктор
+comPlex::comPlex ( )                                                // конструктор по умолчанию
 {
     re = 0;
     im = 0;
+}
+
+comPlex::comPlex ( char a )
+{
+
 }
 
 void comPlex::real ( double Real )                                  // действительная часть 
