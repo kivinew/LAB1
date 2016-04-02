@@ -10,7 +10,7 @@ static int counter ;
 class comPlex
 {
     double real , image;
-    long double big [ 50000 ];
+    long long int big [ 50000 ];
 public:
     const double pi = 3.141592654;
     comPlex ( );
