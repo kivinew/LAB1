@@ -4,15 +4,13 @@ comPlex::comPlex ( )                                                    // конст
 {
     real = 0;
     image = 0;
-    //system ( "cls" );
-    cout <</* "CONSTRUCTOR: The object " << */counter++;
+    cout << counter++;
 }
 
 comPlex::~comPlex ( )
 {
     system ( "cls" );
     cout << "DESTRUCTOR: " << counter-- << " Good bye!!" << endl;
-    //_getch ( );
 }
 
 bool comPlex::entering ( )                                              // ввод членов комплексного числа
