@@ -25,7 +25,7 @@ bool comPlex::entering ( )                                              // ввод 
     cout << endl;
 
     if ( tmpReal == 0 && tmpImage == 0 )
-    {
+{
         cout << "Module |Z| is 0 " << endl;
         cout << "ARGUMENT IS NOT DEFINED!!!" << endl;
         _getch ( );
