@@ -6,15 +6,16 @@
 
 using namespace std;
 
+static int counter ;
 class comPlex
 {
-    double re , im;
+    double real , image;
+    long double big [ 50000 ];
 public:
     const double pi = 3.141592654;
     comPlex ( );
-    comPlex ( char a );
-    void real ( double );
-    void image ( double );
+    ~comPlex ( );
+    bool entering ( );
     double mod ( );
     double arg ( );
 };
