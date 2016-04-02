@@ -1,33 +1,31 @@
 /* Вариант № 9. Комплексные числа.
-Объект класса хранит действительную ( REAL a ) и мнимую ( IMAGE bi ) часть комплексного числа z = a + bi.
+Объект класса хранит действительную ( REAL a ) и мнимую ( IMAGE b*i ) часть комплексного числа z = a + b*i.
 Предусмотреть методы вычисления модуля ( вектора ) и аргумента ( угла ).
 */
 
 #include "comPlex.h"
+#include <Windows.h>
+#include <list>
+
 
 void main ( )
 {
-    comPlex *Z = new comPlex();
-    double r , i;
+    SetCursorPos ( 600 , 0 ) ;
+    SetConsoleTitleA ( "LAB1: complex numbers" ) ;
+    comPlex *Z = new comPlex[2000];
     do
     {
         system ( "cls" );
-        cout << "Enter real part of complex number Z: Re= " ;            // действительная часть
-        cin >> r;
-        cout << "Enter image part of complex number Z: Im= " ;         // мнимая часть
-        cin >> i;
-        cout << endl;
-        if ( r == 0 && i == 0 )
+        if ( Z -> entering ( ) )
         {
-            cout << "Module |Z| is 0 " << endl;
-            cout << "ARGUMENT IS NOT DEFINED!!!" << endl; 
-            _getch ( );
-            return ;
+            cout << "Module |Z| is ..." << Z -> mod ( ) << endl;
+            cout << "Argument arg Z is ..." << Z -> arg ( ) * 180 / Z -> pi << endl;
         }
-        Z -> real ( r );
-        Z -> image ( i );
-        cout << "Module |Z| is ..." << Z -> mod() << endl;
-        cout << "Argument arg Z is ..." << Z -> arg() * 180 / Z -> pi << endl;
+        else
+        {
+            delete Z;
+            return;
+        }
         _getch ( );
     } while ( 1 );
     return ;
