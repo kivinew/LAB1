@@ -1,46 +1,59 @@
 #include "comPlex.h"
 
-comPlex::comPlex ( )                                                // конструктор по умолчанию
+comPlex::comPlex ( )                                                    // конструктор по умолчанию
 {
-    re = 0;
-    im = 0;
+    real = 0;
+    image = 0;
+    //system ( "cls" );
+    cout <</* "CONSTRUCTOR: The object " << */counter++;
 }
 
-comPlex::comPlex ( char a )
+comPlex::~comPlex ( )
 {
-
+    system ( "cls" );
+    cout << "DESTRUCTOR: " << counter-- << " Good bye!!" << endl;
+    //_getch ( );
 }
 
-void comPlex::real ( double Real )                                  // действительная часть 
+bool comPlex::entering ( )                                              // ввод членов комплексного числа
 {
-    re = Real;
-    return;
-}
+    double tmpReal , tmpImage;                                          // временные переменные для проверки на ноль
+    cout << "Enter real part of complex number Z: real= " ;             // действительная часть
+    cin >> tmpReal;
+    cout << "Enter image part of complex number Z: image= " ;           // мнимая часть
+    cin >> tmpImage;
+    cout << endl;
 
-void comPlex::image ( double Image )                                // мнимая часть 
-{
-    im = Image;
-    return;
+    if ( tmpReal == 0 && tmpImage == 0 )
+    {
+        cout << "Module |Z| is 0 " << endl;
+        cout << "ARGUMENT IS NOT DEFINED!!!" << endl;
+        _getch ( );
+        return false;
+    }
+    real = tmpReal;
+    image = tmpImage;
+    return true;
 }
 
 double comPlex::mod ( )                                             // модуль
 {
-    return sqrt ( re*re + im*im );
+    return sqrt ( real*real + image*image );
 }
 
 double comPlex::arg ( )                                             // аргумент
 {
-    if ( re > 0 ) return atan ( im / re );
-    if ( re < 0 ) 
+    if ( real > 0 ) return atan ( image / real );
+    if ( real < 0 ) 
     {
-        if ( im > 0 ) return pi + atan ( im / re );
-        if ( im < 0 ) return -pi + atan ( im / re );
-        if ( im == 0 ) return pi;
+        if ( image > 0 ) return pi + atan ( image / real );
+        if ( image < 0 ) return -pi + atan ( image / real );
+        if ( image == 0 ) return pi;
     }
-    if ( re == 0 )
+    if ( real == 0 )
     {
-        if ( im > 0 ) return pi / 2;
-        if ( im < 0 ) return -pi / 2;
+        if ( image > 0 ) return pi / 2;
+        if ( image < 0 ) return -pi / 2;
     }
     return 0;
 }
