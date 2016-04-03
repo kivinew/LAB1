@@ -23,7 +23,7 @@ void main ( )
         }
         else
         {
-            delete Z;
+            //delete Z;
             return;
         }
         _getch ( );
