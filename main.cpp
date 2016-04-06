@@ -31,7 +31,7 @@ void main ( )
         system ( "cls" );
         if ( Z->entering ( ) )
         {
-            Z->show ( );
+            Z->show ( i );
         }
         else
         {
