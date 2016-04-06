@@ -44,9 +44,11 @@ bool comPlex::entering()                                              // ввод чл
 	return true;
 }
 
-void comPlex::show ( )
+void comPlex::show ( int i )
 {
-    cout << comPlex::mod() ;
+    cout << "Объект :" << "\t" << i;
+    cout << "Модуль :" << comPlex::mod ( ) ;
+    cout << "Аргумент :" << comPlex::arg ( );
 }
 
 double comPlex::mod()                                             // модуль

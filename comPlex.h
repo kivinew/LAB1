@@ -17,7 +17,7 @@ public:
     ~comPlex ( );
     int getCounter ( );
     bool entering ( );
-    void show ( );
+    void show ( int );
     double mod ( );
     double arg ( );
 };
