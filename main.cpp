@@ -4,29 +4,41 @@
 */
 
 #include "comPlex.h"
+#include <locale>
 #include <Windows.h>
-#include <list>
 
-
-void main ( )
+void main()
 {
-    SetCursorPos ( 600 , 0 ) ;
-    SetConsoleTitleA ( "LAB1: complex numbers" ) ;
-    comPlex *Z = new comPlex[2000];
-    do
-    {
-        system ( "cls" );
-        if ( Z -> entering ( ) )
-        {
-            cout << "Module |Z| is ..." << Z -> mod ( ) << endl;
-            cout << "Argument arg Z is ..." << Z -> arg ( ) * 180 / Z -> pi << endl;
-        }
-        else
-        {
-            //delete Z;
-            return;
-        }
-        _getch ( );
-    } while ( 1 );
-    return ;
+	setlocale( LC_ALL,"russian");
+	SetCursorPos(600, 0);
+	SetConsoleTitleA("LAB1: complex numbers");
+	int i = 0;
+	comPlex *Z = new comPlex[10];
+	int choice;
+	do
+	{
+		cout << "Вариант создания объекта класса:" << endl;
+		cout << "0 - создать объект с параметрами по умолчанию" << endl;
+		cout << "1 - создать объект со своими параметрами" << endl;
+		cin >> choice;
+
+		if (!choice)
+		{
+			Z[i]->comPlex();
+			i++;
+		}
+		
+		system("cls");
+		if (Z->entering())
+		{
+			show();
+		}
+		else
+		{
+			system("cls");
+			return;
+		}
+		_getch();
+	} while (1);
+	return;
 }
