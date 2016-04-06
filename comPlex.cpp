@@ -1,5 +1,7 @@
 #include "comPlex.h"
 
+int comPlex::counter = 0;
+
 comPlex::comPlex ( )                                                    // конструктор по умолчанию
 {
     real = 0;
@@ -9,8 +11,8 @@ comPlex::comPlex ( )                                                    // конст
 
 comPlex::~comPlex ( )
 {
-    system ( "cls" );
     cout << "DESTRUCTOR: " << counter-- << " Good bye!!" << endl;
+    _getch ( );
 }
 
 bool comPlex::entering ( )                                              // ввод членов комплексного числа

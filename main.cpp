@@ -24,6 +24,7 @@ void main ( )
         else
         {
             //delete Z;
+            system ( "cls" );
             return;
         }
         _getch ( );

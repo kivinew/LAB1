@@ -6,9 +6,9 @@
 
 using namespace std;
 
-static int counter ;
 class comPlex
 {
+    static int counter ;
     double real , image;
     long long int big [ 50000 ];
 public:
