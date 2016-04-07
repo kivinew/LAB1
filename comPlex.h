@@ -1,6 +1,4 @@
 #pragma once
-#include <math.h>
-#include <cstdio>
 #include <iostream>
 #include <conio.h>
 
@@ -15,9 +13,10 @@ public:
     comPlex();
     comPlex(int, int);
     ~comPlex();
+    void menu();
     int getCounter();
     bool entering();
-    void showObjects(int);
+    void showObject(comPlex*);
     double mod();
     double arg();
 };
