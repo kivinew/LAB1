@@ -33,7 +33,7 @@ void main()
             system("cls");
             if (Z->entering())
             {
-                Z->show(i);
+                Z->showObjects(i);
             }
             else
             {

@@ -44,7 +44,7 @@ bool comPlex::entering()                                                // ввод 
     return true;
 }
 
-void comPlex::show(int i)
+void comPlex::showObjects(int i)                                // вывод объектов
 {
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
     cout<<"Z="<<real<<"+"<<image<<"*i"<<endl;
@@ -52,7 +52,7 @@ void comPlex::show(int i)
     cout<<"arg Z="<<comPlex::arg();
 }
 
-double comPlex::mod()                                             // модуль
+double comPlex::mod()                                           // модуль
 {
     return sqrt(real*real+image*image);
 }
