@@ -42,6 +42,7 @@ void main()
             }
             _getch();
         }
+        cout<< i <<"объект создан"<<endl;
     } while (1);
     return;
 }
