@@ -1,11 +1,11 @@
 #include "comPlex.h"
 
-comPlex::comPlex() : real(1), image(1)                                                    // конструктор по умолчанию
+comPlex::comPlex(): real(1), image(1)                                                    // конструктор по умолчанию
 {
-	counter++ ;
+    counter++;
 }
 
-comPlex::comPlex ( int re , int im )
+comPlex::comPlex(int re, int im)
 {
     real = re;
     image = im;
@@ -14,61 +14,62 @@ comPlex::comPlex ( int re , int im )
 
 comPlex::~comPlex()
 {
-	system("cls");
-	counter-- ;
+    system("cls");
+    counter--;
 }
 
 int comPlex::getCounter()
 {
-	return counter;
+    return counter;
 }
 
-bool comPlex::entering()                                              // ввод членов комплексного числа
+bool comPlex::entering()                                                // ввод членов комплексного числа
 {
-	double tmpReal, tmpImage;                                          // временные переменные для проверки на ноль
-	cout << "Enter real part of complex number Z: real= ";             // действительная часть
-	cin >> tmpReal;
-	cout << "Enter image part of complex number Z: image= ";           // мнимая часть
-	cin >> tmpImage;
-	cout << endl;
+    double tmpReal, tmpImage;                                           // временные переменные для проверки на ноль
+    cout<<"Enter real part of complex number Z: real= ";                // действительная часть
+    cin>>tmpReal;
+    cout<<"Enter image part of complex number Z: image= ";              // мнимая часть
+    cin>>tmpImage;
+    cout<<endl;
 
-	if (tmpReal == 0 && tmpImage == 0)
-	{
-		cout << "Module |Z| is 0 " << endl;
-		cout << "ARGUMENT IS NOT DEFINED!!!" << endl;
-		_getch();
-		return false;
-	}
-	real = tmpReal;
-	image = tmpImage;
-	return true;
+    if (tmpReal==0&&tmpImage==0)
+    {
+        cout<<"Module |Z| is 0 "<<endl;
+        cout<<"ARGUMENT IS NOT DEFINED!!!"<<endl;
+        _getch();
+        return false;
+    }
+    real = tmpReal;
+    image = tmpImage;
+    return true;
 }
 
-void comPlex::show ( int i )
+void comPlex::show(int i)
 {
-    cout << "Объект :" << "\t" << i;
-    cout << "Модуль :" << comPlex::mod ( ) ;
-    cout << "Аргумент :" << comPlex::arg ( );
+    cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
+    cout<<"Z="<<real<<"+"<<image<<"*i"<<endl;
+    cout<<"|Z|="<<comPlex::mod()<<endl;
+    cout<<"arg Z="<<comPlex::arg();
 }
 
 double comPlex::mod()                                             // модуль
 {
-	return sqrt(real*real + image*image);
+    return sqrt(real*real+image*image);
 }
 
 double comPlex::arg()                                             // аргумент
 {
-	if (real > 0) return atan(image / real);
-	if (real < 0)
-	{
-		if (image > 0) return pi + atan(image / real);
-		if (image < 0) return -pi + atan(image / real);
-		if (image == 0) return pi;
-	}
-	if (real == 0)
-	{
-		if (image > 0) return pi / 2;
-		if (image < 0) return -pi / 2;
-	}
-	return 0;
+    if (real>0) return atan(image/real);
+    if (real<0)
+    {
+        if (image>0) return pi+atan(image/real);
+        if (image<0) return -pi+atan(image/real);
+        if (image==0) return pi;
+    }
+    if (real==0)
+    {
+        if (image>0) return pi/2;
+        if (image<0) return -pi/2;
+    }
+    return 0;
 }

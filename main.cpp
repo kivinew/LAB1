@@ -7,38 +7,41 @@
 #include <locale>
 #include <Windows.h>
 
-void main ( )
+void main()
 {
-    setlocale ( LC_ALL , "russian" );
-    SetCursorPos ( 600 , 0 );
-    SetConsoleTitleA ( "LAB1: complex numbers" );
+    setlocale(LC_ALL, "russian");
+    SetCursorPos(600, 0);
+    SetConsoleTitleA("LAB1: complex numbers");
     int i = 0;
-    comPlex *Z = new comPlex [ 10 ];
+    comPlex *Z = new comPlex[10];
     int choice;
     do
     {
-        cout << "Вариант создания объекта класса:" << endl;
-        cout << "0 - создать объект с параметрами по умолчанию" << endl;
-        cout << "1 - создать объект со своими параметрами" << endl;
-        cin >> choice;
+        cout<<"Вариант создания объекта класса:"<<endl;
+        cout<<"0 - создать объект с параметрами по умолчанию"<<endl;
+        cout<<"1 - создать объект со своими параметрами"<<endl;
+        cin>>choice;
 
-        if ( !choice )
+        if (!choice)
         {
-            ( Z + i )->comPlex::comPlex ( 1 , 1 );
+            system("cls");
+            (Z+i)->comPlex::comPlex(1, 1);
             i++;
-        }
-
-        system ( "cls" );
-        if ( Z->entering ( ) )
-        {
-            Z->show ( i );
         }
         else
         {
-            system ( "cls" );
-            return;
+            system("cls");
+            if (Z->entering())
+            {
+                Z->show(i);
+            }
+            else
+            {
+                system("cls");
+                return;
+            }
+            _getch();
         }
-        _getch ( );
-    } while ( 1 );
+    } while (1);
     return;
 }
