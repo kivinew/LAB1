@@ -1,14 +1,13 @@
 #include "comPlex.h"
 
-void comPlex::menu()
+void comPlex::menu(int countObjects)
 {
-    int i = 0;
     int choice;
     system("cls");
-    cout<<"0 - вывод массива объектов"<<endl;
-    cout<<"1 - создать объект со своими параметрами"<<endl;
-    cout<<"2 - создать объект с параметрами по умолчанию"<<endl;
-    cout<<"3 - количество созданных объектов"<<endl;
+    cout<<"\n\t0 - вывод массива объектов"<<endl;
+    cout<<"\t1 - создать объект со своими параметрами"<<endl;
+    cout<<"\t2 - создать объект с параметрами по умолчанию"<<endl;
+    cout<<"\t3 - количество созданных объектов"<<endl;
 	cout<<"Ваш выбор: ";
     cin>>choice;
     switch (choice)
@@ -16,7 +15,7 @@ void comPlex::menu()
         case 0:
         {
             cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
-            for (i = 0; i<10; i++)
+            for (int i = 0; i<countObjects; i++)
             {
                 showObject(this+i);
             }

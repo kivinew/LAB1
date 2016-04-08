@@ -13,7 +13,7 @@ public:
     comPlex();
     comPlex(int, int);
     ~comPlex();
-    void menu();
+    void menu(int);
     int getCounter();
     bool entering();
     void showObject(comPlex*);

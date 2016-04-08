@@ -13,10 +13,13 @@ void main()
     SetCursorPos(600, 0);
     SetConsoleTitleA("LAB1: complex numbers");
 
-    comPlex *Z = new comPlex[10];
+    int N;
+    cout<<"Введите количество объектов: ";
+    cin>>N;
+    comPlex *Z = new comPlex[N];
     do
     {
-        Z->menu();
+        Z->menu(N);
     } while (1);
     return;
 }
