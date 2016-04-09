@@ -4,16 +4,16 @@
 
 using namespace std;
 
-static int counter;
 class comPlex
 {
     double real, image;
 public:
+    static int counter;
     const double pi = 3.141592654;
     comPlex();
     comPlex(int, int);
+    comPlex::comPlex(comPlex &);
     ~comPlex();
-    void menu(int);
     int getCounter();
     bool entering();
     void showObject(comPlex*);

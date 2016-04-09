@@ -1,55 +1,5 @@
 #include "comPlex.h"
 
-void comPlex::menu(int countObjects)
-{
-    int choice;
-    system("cls");
-    cout<<"\n\t0 - вывод массива объектов"<<endl;
-    cout<<"\t1 - создать объект со своими параметрами"<<endl;
-    cout<<"\t2 - создать объект с параметрами по умолчанию"<<endl;
-    cout<<"\t3 - количество созданных объектов"<<endl;
-	cout<<"Ваш выбор: ";
-    cin>>choice;
-    switch (choice)
-    {
-        case 0:
-        {
-            cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
-            for (int i = 0; i<countObjects; i++)
-            {
-                showObject(this+i);
-            }
-            _getch();
-            break;
-        }
-        case 1:
-        {
-            system("cls");
-            if (this->entering())
-            {
-                this->showObject(this);
-            }
-            else
-            {
-                system("cls");
-                return;
-            }
-            _getch();
-            break;
-        }
-        case 2:
-        {
-
-            break;
-        }
-        case 3:
-        {
-
-            break;
-        }
-    }
-    return;
-}
 
 comPlex::comPlex(): real(0), image(1)                                   // конструктор по умолчанию
 {
@@ -63,10 +13,17 @@ comPlex::comPlex(int re, int im)                                        // конст
     counter++;
 }
 
+comPlex::comPlex(comPlex &obj)                                          // конструктор копирования
+{
+    real = obj.real;
+    image = obj.image;
+    counter++;
+}
+
 comPlex::~comPlex()                                                     // деструктор
 {
-    system("cls");
-    counter--;
+    cout<<"Удалён объект "<<counter--<<endl;
+    delete this;
 }
 
 int comPlex::getCounter()                                               // вывод счётчика
