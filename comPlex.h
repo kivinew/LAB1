@@ -4,19 +4,21 @@
 
 using namespace std;
 
-class comPlex
+class Complex
 {
     static int counter;
     double real, image;
 public:
     const double pi = 3.141592654;
-    comPlex();
-    comPlex(int, int);
-    comPlex::comPlex(comPlex &);
-    ~comPlex();
+    Complex();
+    Complex(int, int);
+    Complex::Complex(Complex &);
+    ~Complex();
     int getCounter();
-    bool entering();
-    void showObject(comPlex*);
+    void entering();
+    void edit();
+    void del();
+    void showObject(Complex*);
     double mod();
     double arg();
 };

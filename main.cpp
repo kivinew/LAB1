@@ -7,39 +7,48 @@
 #include <locale>
 #include <Windows.h>
 #define ESC 27
-#define SHOW 48
+#define SPACEBAR 32
 #define CREATE_CUSTOM 49
-#define CREATE_DEFAULT 50
-#define SELECT_ONE 51
+#define CREATE_DEFAULT 116
+#define ENTER 13
+#define DEL 46
 
-void menu(comPlex*, int);
+void menu(Complex*, int);
 
 void main()
 {
     setlocale(LC_ALL, "russian");
     SetCursorPos(600, 0);
-    SetConsoleTitleA("LAB1: complex numbers");
+    SetConsoleTitleA("LAB1: Complex numbers");
 
     int objCount;
     cout<<"Введите количество объектов: ";
     cin>>objCount;
-    comPlex *objArr = new comPlex[objCount];
+
+    Complex *objArr = new Complex[objCount];                        // массив объектов
+    system("cls");
     do
     {
-        system("cls");
         menu(objArr, objCount);
     } while (1);
     return;
 }
 
-void menu(comPlex *objectArray, int countObjects)
+void menu(Complex *objectArray, int countObjects)
 {
     int objNumber;
     char choice;
-    cout<<"\n\t0 - вывод массива объектов"<<endl;
-    cout<<"\t1 - создать объект со своими параметрами"<<endl;
-    cout<<"\t2 - создать объект с параметрами по умолчанию"<<endl;
-    cout<<"\t3 - выбрать для работы один объект"<<endl;
+    system("cls");
+    cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
+    for (int i = 0; i<(objectArray->getCounter()); i++)
+    {
+        cout<<i;
+        objectArray->showObject(objectArray+i);
+    }
+    cout<<"\n\tSPACEBAR - вывод массива объектов"<<endl;
+    cout<<"\t1 - добавить объект со своими параметрами"<<endl;
+    cout<<"\t2 - добавить объект"<<endl;
+    cout<<"\tENTER - выбрать для работы один объект"<<endl;
     cout<<"\tESC - выход"<<endl;
     while (!_kbhit())
     {
@@ -47,41 +56,50 @@ void menu(comPlex *objectArray, int countObjects)
     choice = _getch();
     switch (choice)
     {
-    case SHOW:
+    case SPACEBAR:
     {
-        cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
-        for (int i = 0; i<countObjects; i++)
-        {
-            cout<<i;
-            objectArray->showObject(objectArray+i);
-        }
-        cout<<"Нажмите любую клавишу...";
-        _getch();
+        system("cls");
         break;
     }
     case CREATE_CUSTOM:
     {
-        cout<<"1.........";
-        _getch();
+        objectArray->entering();
         break;
     }
     case CREATE_DEFAULT:
     {
-        cout<<"2.........";
-        _getch();
+        
         break;
     }
-    case SELECT_ONE:
+    case ENTER:
     {
         cout<<"Укажите номер объекта: ";
         cin>>objNumber;
-        objNumber--;
-        if (!(objNumber>=countObjects)&&!(objNumber<0))
+        if (!(objNumber>(objectArray->getCounter()))&&!(objNumber<0))
         {
-            objectArray->showObject(objectArray+objNumber);
+            //objectArray->showObject(objectArray+objNumber);
+            cout<<"DELETE - удалить объект"<<endl;
+            cout<<"ENTER- редактировать объект"<<endl;
+            cout<<"SPACEBAR - скопировать объект"<<endl;
+            cout<<"ESC - отмена"<<endl;
+            while (!_kbhit());
+            choice = _getch();
+            switch (choice)
+            {
+            case DEL:
+                (objectArray+objNumber)->del();
+                break;
+            case ENTER:
+                (objectArray+objNumber)->edit();
+                break;
+            case SPACEBAR:
+                Complex *objArr = new Complex (&objectArray);           // настроить конструктор копирования!!!!!!!
+                break;
+            case ESC:
+                break;
+            }
         }
         else cout<<"Такого объекта нет!";
-        _getch();
         break;
     }
     case ESC:

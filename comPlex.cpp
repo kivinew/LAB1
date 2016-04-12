@@ -1,37 +1,38 @@
 #include "comPlex.h"
 
-int comPlex::counter = 0;
+int Complex::counter = 0;
 
-comPlex::comPlex(): real(0), image(counter++)                           // конструктор по умолчанию
+Complex::Complex(): real(0), image(0)                                   // конструктор по умолчанию
 {
+    counter++;
 }
 
-comPlex::comPlex(int re, int im)                                        // конструктор с параметрами
+Complex::Complex(int re, int im)                                        // конструктор с параметрами
 {
     real = re;
     image = im;
     counter++;
 }
 
-comPlex::comPlex(comPlex &obj)                                          // конструктор копирования
+Complex::Complex(Complex &obj)                                          // конструктор копирования
 {
+    counter++;
     this->real = obj.real;
     this->image = obj.image;
-    counter++;
 }
 
-comPlex::~comPlex()                                                     // деструктор
+Complex::~Complex()                                                     // деструктор
 {
-    cout<<"Удалён объект "<<counter--<<endl;
-    delete this;
+    counter--;
+    cout<<"Удалён объект "<<endl;
 }
 
-int comPlex::getCounter()                                               // вывод счётчика
+int Complex::getCounter()                                               // вывод счётчика
 {
     return counter;
 }
 
-bool comPlex::entering()                                                // ввод членов комплексного числа
+void Complex::entering()                                                // ввод членов комплексного числа
 {
     double tmpReal, tmpImage;                                           // временные переменные для проверки на ноль
     cout<<"Введите действительную часть Z: real= ";                     // действительная часть
@@ -39,33 +40,39 @@ bool comPlex::entering()                                                // ввод 
     cout<<"Введите мнимую часть Z: image= ";                            // мнимая часть
     cin>>tmpImage;
     cout<<endl;
-
-    if (tmpReal==0&&tmpImage==0)
-    {
-        cout<<"|Z| = 0 "<<endl;
-        cout<<"Аргумент не определён!!!"<<endl;
-        _getch();
-        return false;
-    }
     real = tmpReal;
     image = tmpImage;
-    return true;
-}
-
-void comPlex::showObject(comPlex* ptr)                                  // вывод объектов
-{
-    cout<<"Z="<<ptr->real<<"+"<<ptr->image<<"*i"<<"\t\t";
-    cout<<"|Z|="<<ptr->mod()<<"\t";
-    cout<<"arg Z="<<ptr->arg()<<"\t"<<endl;
     return;
 }
 
-double comPlex::mod()                                                   // модуль
+void Complex::edit()                                                    // редактирование объекта
+{
+    cout<<"Введите значение действительной части:"<<endl;
+    cin>>this->real;
+    cout<<"Введите значение мнимой части:"<<endl;
+    cin>>this->image;
+}
+
+void Complex::del()                                                     // удаление объекта
+{
+    delete this;
+}
+
+void Complex::showObject(Complex* ptr)                                  // вывод объектов
+{
+    cout<<"Z="<<ptr->real<<"+"<<ptr->image<<"*i"<<"\t\t";
+    cout<<"|Z|="<<ptr->mod()<<"\t";
+    if (ptr->arg()!=0) cout<<"arg Z="<<ptr->arg()<<"\t"<<endl;
+    else cout<<"n/a"<<endl;
+    return;
+}
+
+double Complex::mod()                                                   // модуль
 {
     return sqrt(real*real+image*image);
 }
 
-double comPlex::arg()                                                   // аргумент
+double Complex::arg()                                                   // аргумент
 {
     if (real>0) return atan(image/real);
     if (real<0)
