@@ -7,6 +7,11 @@
 #include <locale>
 #include <Windows.h>
 #define ESC 27
+#define SHOW 48
+#define CREATE_CUSTOM 49
+#define CREATE_DEFAULT 50
+#define SELECT_ONE 51
+
 void menu(comPlex*, int);
 
 void main()
@@ -30,19 +35,19 @@ void main()
 void menu(comPlex *objectArray, int countObjects)
 {
     int objNumber;
-    int choice;
+    char choice;
     cout<<"\n\t0 - вывод массива объектов"<<endl;
     cout<<"\t1 - создать объект со своими параметрами"<<endl;
     cout<<"\t2 - создать объект с параметрами по умолчанию"<<endl;
     cout<<"\t3 - выбрать для работы один объект"<<endl;
-    cout<<"Ваш выбор: ";
+    cout<<"\tESC - выход"<<endl;
     while (!_kbhit())
     {
-        choice = _getch();
     }
+    choice = _getch();
     switch (choice)
     {
-    case 0:
+    case SHOW:
     {
         cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
         for (int i = 0; i<countObjects; i++)
@@ -54,22 +59,26 @@ void menu(comPlex *objectArray, int countObjects)
         _getch();
         break;
     }
-    case 1:
+    case CREATE_CUSTOM:
     {
-        
+        cout<<"1.........";
         _getch();
         break;
     }
-    case 2:
+    case CREATE_DEFAULT:
     {
-
+        cout<<"2.........";
+        _getch();
         break;
     }
-    case 3:
+    case SELECT_ONE:
     {
         cout<<"Укажите номер объекта: ";
         cin>>objNumber;
-        objectArray->showObject(objectArray+objNumber);
+        if (!(objNumber>countObjects))
+        {
+            objectArray->showObject(objectArray+objNumber);
+        }
         _getch();
         break;
     }
