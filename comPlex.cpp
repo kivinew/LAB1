@@ -2,7 +2,7 @@
 
 int comPlex::counter = 0;
 
-comPlex::comPlex(): real(0), image(counter++)                                   // конструктор по умолчанию
+comPlex::comPlex(): real(0), image(counter++)                           // конструктор по умолчанию
 {
 }
 

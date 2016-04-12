@@ -75,10 +75,12 @@ void menu(comPlex *objectArray, int countObjects)
     {
         cout<<"Укажите номер объекта: ";
         cin>>objNumber;
-        if (!(objNumber>countObjects))
+        objNumber--;
+        if (!(objNumber>=countObjects)&&!(objNumber<0))
         {
             objectArray->showObject(objectArray+objNumber);
         }
+        else cout<<"Такого объекта нет!";
         _getch();
         break;
     }
