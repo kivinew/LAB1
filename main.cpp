@@ -6,7 +6,7 @@
 #include "comPlex.h"
 #include <locale>
 #include <Windows.h>
-
+#define ESC 27
 void menu(comPlex*, int);
 
 void main()
@@ -36,8 +36,10 @@ void menu(comPlex *objectArray, int countObjects)
     cout<<"\t2 - создать объект с параметрами по умолчанию"<<endl;
     cout<<"\t3 - выбрать для работы один объект"<<endl;
     cout<<"Ваш выбор: ";
-    cin>>choice;
-
+    while (!_kbhit())
+    {
+        choice = _getch();
+    }
     switch (choice)
     {
     case 0:
@@ -45,23 +47,16 @@ void menu(comPlex *objectArray, int countObjects)
         cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
         for (int i = 0; i<countObjects; i++)
         {
+            cout<<i;
             objectArray->showObject(objectArray+i);
         }
+        cout<<"Нажмите любую клавишу...";
         _getch();
         break;
     }
     case 1:
     {
-        system("cls");
-        if ((objectArray+countObjects)->entering())
-        {
-            objectArray->showObject(objectArray);
-        }
-        else
-        {
-            system("cls");
-            return;
-        }
+        
         _getch();
         break;
     }
@@ -74,9 +69,13 @@ void menu(comPlex *objectArray, int countObjects)
     {
         cout<<"Укажите номер объекта: ";
         cin>>objNumber;
-        (objectArray+objNumber)->showObject();
+        objectArray->showObject(objectArray+objNumber);
+        _getch();
         break;
     }
+    case ESC:
+        exit(0);
+        break;
     }
     return;
 }
