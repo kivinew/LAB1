@@ -1,9 +1,9 @@
 #include "comPlex.h"
 
+int comPlex::counter = 0;
 
-comPlex::comPlex(): real(0), image(1)                                   // конструктор по умолчанию
+comPlex::comPlex(): real(0), image(counter++)                                   // конструктор по умолчанию
 {
-    counter++;
 }
 
 comPlex::comPlex(int re, int im)                                        // конструктор с параметрами
@@ -15,8 +15,8 @@ comPlex::comPlex(int re, int im)                                        // конст
 
 comPlex::comPlex(comPlex &obj)                                          // конструктор копирования
 {
-    real = obj.real;
-    image = obj.image;
+    this->real = obj.real;
+    this->image = obj.image;
     counter++;
 }
 
