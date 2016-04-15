@@ -9,13 +9,13 @@
 #define ESC 27
 #define SPACEBAR 32
 #define CREATE_CUSTOM 49
-#define CREATE_DEFAULT 116
+#define CREATE_DEFAULT 50
 #define ENTER 13
 #define DEL 46
 
 void menu(Complex*, int);
 
-void main()
+int main()
 {
     setlocale(LC_ALL, "russian");
     SetCursorPos(600, 0);
@@ -31,21 +31,21 @@ void main()
     {
         menu(objArr, objCount);
     } while (1);
-    return;
+    return 0;
 }
 
-void menu(Complex *objectArray, int countObjects)
+void menu(Complex *objectArray, int countObjects)                   // вывод таблицы объектов и меню
 {
-    int objNumber;
+    int objNumber, i;
     char choice;
     system("cls");
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
-    for (int i = 0; i<(objectArray->getCounter()); i++)
+    for (i = 0; i<(objectArray->getCounter()); i++)             // таблица объектов
     {
         cout<<i;
         objectArray->showObject(objectArray+i);
     }
-    cout<<"\n\tSPACEBAR - вывод массива объектов"<<endl;
+    cout<<"\n\tSPACEBAR - вывод массива объектов"<<endl;            // меню
     cout<<"\t1 - добавить объект со своими параметрами"<<endl;
     cout<<"\t2 - добавить объект"<<endl;
     cout<<"\tENTER - выбрать для работы один объект"<<endl;
@@ -63,21 +63,20 @@ void menu(Complex *objectArray, int countObjects)
     }
     case CREATE_CUSTOM:
     {
-        objectArray->entering();
+        (objectArray+i)->entering();
         break;
     }
     case CREATE_DEFAULT:
     {
-        
+
         break;
     }
     case ENTER:
     {
         cout<<"Укажите номер объекта: ";
         cin>>objNumber;
-        if (!(objNumber>(objectArray->getCounter()))&&!(objNumber<0))
+        if (!(objNumber>=(objectArray->getCounter()))&&!(objNumber<0))
         {
-            //objectArray->showObject(objectArray+objNumber);
             cout<<"DELETE - удалить объект"<<endl;
             cout<<"ENTER- редактировать объект"<<endl;
             cout<<"SPACEBAR - скопировать объект"<<endl;
@@ -93,7 +92,7 @@ void menu(Complex *objectArray, int countObjects)
                 (objectArray+objNumber)->edit();
                 break;
             case SPACEBAR:
-                Complex *objArr = new Complex (&objectArray);           // настроить конструктор копирования!!!!!!!
+                objectArray[i].showObject(objectArray+i-1);                          // настроить конструктор копирования!!!!!!!
                 break;
             case ESC:
                 break;

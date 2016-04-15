@@ -7,14 +7,12 @@ Complex::Complex(): real(0), image(0)                                   // конст
     counter++;
 }
 
-Complex::Complex(int re, int im)                                        // конструктор с параметрами
+Complex::Complex(int re, int im): real(re), image(im)                   // конструктор с параметрами
 {
-    real = re;
-    image = im;
     counter++;
 }
 
-Complex::Complex(Complex &obj)                                          // конструктор копирования
+Complex::Complex(const Complex &obj)                                    // конструктор копирования
 {
     counter++;
     this->real = obj.real;
@@ -24,7 +22,8 @@ Complex::Complex(Complex &obj)                                          // конст
 Complex::~Complex()                                                     // деструктор
 {
     counter--;
-    cout<<"Удалён объект "<<endl;
+    cout<<"Удалён объект №"<<counter<<endl;
+    _getch();
 }
 
 int Complex::getCounter()                                               // вывод счётчика
@@ -55,7 +54,7 @@ void Complex::edit()                                                    // редак
 
 void Complex::del()                                                     // удаление объекта
 {
-    delete this;
+    delete []this;
 }
 
 void Complex::showObject(Complex* ptr)                                  // вывод объектов
