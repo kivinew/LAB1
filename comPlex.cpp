@@ -22,8 +22,6 @@ Complex::Complex(const Complex &obj)                                    // конст
 Complex::~Complex()                                                     // деструктор
 {
     counter--;
-    cout<<"Удалён объект №"<<counter<<endl;
-    _getch();
 }
 
 int Complex::getCounter()                                               // вывод счётчика
@@ -33,15 +31,22 @@ int Complex::getCounter()                                               // вывод
 
 void Complex::entering()                                                // ввод членов комплексного числа
 {
-    double tmpReal, tmpImage;                                           // временные переменные для проверки на ноль
     cout<<"Введите действительную часть Z: real= ";                     // действительная часть
-    cin>>tmpReal;
+    cin>>real;
     cout<<"Введите мнимую часть Z: image= ";                            // мнимая часть
-    cin>>tmpImage;
+    cin>>image;
     cout<<endl;
-    real = tmpReal;
-    image = tmpImage;
     return;
+}
+
+void Complex::grow(Complex* arr)
+{
+    Complex* newArr;
+    newArr = new Complex[counter*2];
+    for (int i=0; i<counter; i++)
+    {
+        Complex newArr ( arr[i]);
+    }
 }
 
 void Complex::edit()                                                    // редактирование объекта
@@ -54,12 +59,13 @@ void Complex::edit()                                                    // редак
 
 void Complex::del()                                                     // удаление объекта
 {
-    delete []this;
+    this->image = real = 0;
+    delete this;
 }
 
 void Complex::showObject(Complex* ptr)                                  // вывод объектов
 {
-    cout<<"Z="<<ptr->real<<"+"<<ptr->image<<"*i"<<"\t\t";
+    cout<<"Z="<<ptr->real<<"+"<<ptr->image<<"*i"<<"\t";
     cout<<"|Z|="<<ptr->mod()<<"\t";
     if (ptr->arg()!=0) cout<<"arg Z="<<ptr->arg()<<"\t"<<endl;
     else cout<<"n/a"<<endl;

@@ -25,13 +25,15 @@ int main()
     cout<<"Введите количество объектов: ";
     cin>>objCount;
 
-    Complex *objArr = new Complex[objCount];                        // массив объектов
+    Complex* arrPtr;
+    arrPtr = new Complex[objCount];                                 // массив объектов
     system("cls");
     do
     {
-        menu(objArr, objCount);
+        menu(arrPtr, objCount);
     } while (1);
     return 0;
+    delete[] arrPtr;
 }
 
 void menu(Complex *objectArray, int countObjects)                   // вывод таблицы объектов и меню
@@ -40,12 +42,12 @@ void menu(Complex *objectArray, int countObjects)                   // вывод таб
     char choice;
     system("cls");
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
-    for (i = 0; i<(objectArray->getCounter()); i++)             // таблица объектов
+    for (i = 0; i<(objectArray->getCounter()); i++)                 // таблица объектов
     {
         cout<<i;
         objectArray->showObject(objectArray+i);
     }
-    cout<<"\n\tSPACEBAR - вывод массива объектов"<<endl;            // меню
+    cout<<"\n\tSPACEBAR - обновить"<<endl;                          // меню
     cout<<"\t1 - добавить объект со своими параметрами"<<endl;
     cout<<"\t2 - добавить объект"<<endl;
     cout<<"\tENTER - выбрать для работы один объект"<<endl;
@@ -56,54 +58,58 @@ void menu(Complex *objectArray, int countObjects)                   // вывод таб
     choice = _getch();
     switch (choice)
     {
-    case SPACEBAR:
-    {
-        system("cls");
-        break;
-    }
-    case CREATE_CUSTOM:
-    {
-        (objectArray+i)->entering();
-        break;
-    }
-    case CREATE_DEFAULT:
-    {
-
-        break;
-    }
-    case ENTER:
-    {
-        cout<<"Укажите номер объекта: ";
-        cin>>objNumber;
-        if (!(objNumber>=(objectArray->getCounter()))&&!(objNumber<0))
+        case SPACEBAR:
         {
-            cout<<"DELETE - удалить объект"<<endl;
-            cout<<"ENTER- редактировать объект"<<endl;
-            cout<<"SPACEBAR - скопировать объект"<<endl;
-            cout<<"ESC - отмена"<<endl;
-            while (!_kbhit());
-            choice = _getch();
-            switch (choice)
-            {
-            case DEL:
-                (objectArray+objNumber)->del();
-                break;
-            case ENTER:
-                (objectArray+objNumber)->edit();
-                break;
-            case SPACEBAR:
-                objectArray[i].showObject(objectArray+i-1);                          // настроить конструктор копирования!!!!!!!
-                break;
-            case ESC:
-                break;
-            }
+            system("cls");
+            break;
         }
-        else cout<<"Такого объекта нет!";
-        break;
-    }
-    case ESC:
-        exit(0);
-        break;
+        case CREATE_CUSTOM:
+        {
+            (objectArray+i)->entering();
+            break;
+        }
+        case CREATE_DEFAULT:
+        {
+            if (i>=objectArray->getCounter())
+                (objectArray+i)->grow(objectArray);
+            break;
+        }
+        case ENTER:
+        {
+            cout<<"Укажите номер объекта: ";
+            cin>>objNumber;
+            if (!(objNumber>=(objectArray->getCounter()))&&!(objNumber<0))
+            {
+                cout<<"DELETE - удалить объект"<<endl;
+                cout<<"ENTER- редактировать объект"<<endl;
+                cout<<"SPACEBAR - скопировать объект"<<endl;
+                cout<<"ESC - отмена"<<endl;
+                while (!_kbhit());
+                choice = _getch();
+                switch (choice)
+                {
+                case DEL:
+                    objectArray[objNumber].del();
+                    break;
+                case ENTER:
+                    objectArray[objNumber].edit();
+                    break;
+                case SPACEBAR:                                      // настроить конструктор копирования!!!!!!!
+                    if(i>=objectArray->getCounter())
+                        (objectArray)->grow(objectArray);
+                    new Complex* (objectArray+i);
+                    break;
+                case ESC:
+                    break;
+                }
+            }
+            else cout<<"Такого объекта нет!";
+            _getch();
+            break;
+        }
+        case ESC:
+            exit(0);
+            break;
     }
     return;
 }
