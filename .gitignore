@@ -211,3 +211,8 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 LAB1.VC.opendb
+*.layout
+*.cscope_file_list
+*.depend
+*.cbp
+*.db
