@@ -2,9 +2,8 @@
 
 int Complex::counter = 0;
 
-Complex::Complex(): real(0), image(0)                                   // конструктор по умолчанию
+Complex::Complex(): real(0), image(counter++)                           // конструктор по умолчанию
 {
-    counter++;
 }
 
 Complex::Complex(int re, int im): real(re), image(im)                   // конструктор с параметрами
@@ -12,7 +11,7 @@ Complex::Complex(int re, int im): real(re), image(im)                   // конст
     counter++;
 }
 
-Complex::Complex(const Complex &obj)                                    // конструктор копировани€
+Complex::Complex(Complex &obj)                                          // конструктор копировани€
 {
     counter++;
     this->real = obj.real;
@@ -21,32 +20,34 @@ Complex::Complex(const Complex &obj)                                    // конст
 
 Complex::~Complex()                                                     // деструктор
 {
-    counter--;
+    //counter--;
 }
-
-int Complex::getCounter()                                               // вывод счЄтчика
+int Complex::getCounter()                                               // возврат счЄтчика
 {
     return counter;
 }
 
-void Complex::entering()                                                // ввод членов комплексного числа
+void Complex::entering()                                    // ввод членов комплексного числа
 {
     cout<<"¬ведите действительную часть Z: real= ";                     // действительна€ часть
-    cin>>real;
+    cin>>this->real;
     cout<<"¬ведите мнимую часть Z: image= ";                            // мнима€ часть
-    cin>>image;
+    cin>>this->image;
     cout<<endl;
     return;
 }
 
-void Complex::grow(Complex* arr)
+Complex** Complex::grow(Complex** arr)                                  // увеличение массива указателей в два раза
 {
-    Complex* newArr;
-    newArr = new Complex[counter*2];
-    for (int i=0; i<counter; i++)
+    Complex** newArr;
+    newArr = new Complex*[counter*2];
+    for (int i = 0; i<counter; i++)
     {
-        Complex newArr ( arr[i]);
+        Complex newObj(*arr[i]);
+        newArr[i] = &newObj;
     }
+    delete arr;
+    return newArr;
 }
 
 void Complex::edit()                                                    // редактирование объекта
@@ -57,17 +58,17 @@ void Complex::edit()                                                    // редак
     cin>>this->image;
 }
 
-void Complex::del()                                                     // удаление объекта
+void Complex::del(Complex* ptr)                                                     // удаление объекта
 {
     this->image = real = 0;
-    delete this;
+    delete ptr;
 }
 
-void Complex::showObject(Complex* ptr)                                  // вывод объектов
+void Complex::showObject()                                  // вывод объектов
 {
-    cout<<"Z="<<ptr->real<<"+"<<ptr->image<<"*i"<<"\t";
-    cout<<"|Z|="<<ptr->mod()<<"\t";
-    if (ptr->arg()!=0) cout<<"arg Z="<<ptr->arg()<<"\t"<<endl;
+    cout<<"Z="<<this->real<<"+"<<this->image<<"*i"<<"\t";
+    cout<<"|Z|="<<this->mod()<<"\t";
+    if (this->arg()!=0) cout<<"arg Z="<<this->arg()<<"\t"<<endl;
     else cout<<"n/a"<<endl;
     return;
 }

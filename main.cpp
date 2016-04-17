@@ -8,12 +8,12 @@
 #include <Windows.h>
 #define ESC 27
 #define SPACEBAR 32
-#define CREATE_CUSTOM 49
-#define CREATE_DEFAULT 50
+#define ONE 49
+#define TWO 50
 #define ENTER 13
 #define DEL 46
 
-void menu(Complex*, int);
+void menu(Complex**, int);
 
 int main()
 {
@@ -25,27 +25,32 @@ int main()
     cout<<"Введите количество объектов: ";
     cin>>objCount;
 
-    Complex* arrPtr;
-    arrPtr = new Complex[objCount];                                 // массив объектов
+    Complex** arrPointers;
+    arrPointers = new Complex*[objCount];                           // массив указателей на объекты
+    for (int i=0; i<objCount;i++)
+    {
+        arrPointers[i] = new Complex;
+    }
+    _getch();
     system("cls");
     do
     {
-        menu(arrPtr, objCount);
+        menu(arrPointers, objCount);
     } while (1);
     return 0;
-    delete[] arrPtr;
+    delete[] arrPointers;
 }
 
-void menu(Complex *objectArray, int countObjects)                   // вывод таблицы объектов и меню
+void menu(Complex** objectArray, int countObjects)                  // вывод таблицы объектов и меню
 {
     int objNumber, i;
     char choice;
     system("cls");
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
-    for (i = 0; i<(objectArray->getCounter()); i++)                 // таблица объектов
+    for (i = 0; i<(objectArray[0]->getCounter()); i++)              // таблица объектов
     {
-        cout<<i;
-        objectArray->showObject(objectArray+i);
+        cout<<i<<": ";
+        (objectArray[i])->showObject();
     }
     cout<<"\n\tSPACEBAR - обновить"<<endl;                          // меню
     cout<<"\t1 - добавить объект со своими параметрами"<<endl;
@@ -63,22 +68,24 @@ void menu(Complex *objectArray, int countObjects)                   // вывод таб
             system("cls");
             break;
         }
-        case CREATE_CUSTOM:
+        case ONE:
         {
-            (objectArray+i)->entering();
+            objectArray = objectArray[i-1]->grow(objectArray);
+            countObjects = objectArray[i]->getCounter();
+            objectArray[i]->entering();
             break;
         }
-        case CREATE_DEFAULT:
+        case TWO:
         {
-            if (i>=objectArray->getCounter())
-                (objectArray+i)->grow(objectArray);
+            objectArray = objectArray[i-1]->grow(objectArray);
+
             break;
         }
         case ENTER:
         {
             cout<<"Укажите номер объекта: ";
             cin>>objNumber;
-            if (!(objNumber>=(objectArray->getCounter()))&&!(objNumber<0))
+            if (!(objNumber>=(objectArray[0]->getCounter()))&&!(objNumber<0))
             {
                 cout<<"DELETE - удалить объект"<<endl;
                 cout<<"ENTER- редактировать объект"<<endl;
@@ -89,15 +96,15 @@ void menu(Complex *objectArray, int countObjects)                   // вывод таб
                 switch (choice)
                 {
                 case DEL:
-                    objectArray[objNumber].del();
+                    objectArray[objNumber]->del(objectArray[objNumber]);
                     break;
                 case ENTER:
-                    objectArray[objNumber].edit();
+                    objectArray[objNumber]->edit();
                     break;
                 case SPACEBAR:                                      // настроить конструктор копирования!!!!!!!
-                    if(i>=objectArray->getCounter())
-                        (objectArray)->grow(objectArray);
-                    new Complex* (objectArray+i);
+                    if(i>=objectArray[0]->getCounter())
+                        objectArray[0]->grow(objectArray);
+                    new Complex* (objectArray[i]);
                     break;
                 case ESC:
                     break;

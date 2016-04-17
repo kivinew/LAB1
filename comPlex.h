@@ -13,14 +13,14 @@ class Complex
 public:
     Complex();
     Complex(int, int);
-    Complex(const Complex &);
+    Complex(Complex &);
     ~Complex();
     int getCounter();
     void entering();
-    void grow(Complex*);
+    Complex** grow(Complex**);
     void edit();
-    void del();
-    void showObject(Complex*);
+    void del(Complex*);
+    void showObject();
     double mod();
     double arg();
 };
