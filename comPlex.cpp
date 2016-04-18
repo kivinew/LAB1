@@ -20,34 +20,21 @@ Complex::Complex(Complex &obj)                                          // конст
 
 Complex::~Complex()                                                     // деструктор
 {
-    //counter--;
+    counter--;
 }
 int Complex::getCounter()                                               // возврат счЄтчика
 {
     return counter;
 }
 
-void Complex::entering()                                    // ввод членов комплексного числа
+void Complex::entering()                                                // ввод членов комплексного числа
 {
     cout<<"¬ведите действительную часть Z: real= ";                     // действительна€ часть
-    cin>>this->real;
+    cin>>real;
     cout<<"¬ведите мнимую часть Z: image= ";                            // мнима€ часть
-    cin>>this->image;
+    cin>>image;
     cout<<endl;
     return;
-}
-
-Complex** Complex::grow(Complex** arr)                                  // увеличение массива указателей в два раза
-{
-    Complex** newArr;
-    newArr = new Complex*[counter*2];
-    for (int i = 0; i<counter; i++)
-    {
-        Complex newObj(*arr[i]);
-        newArr[i] = &newObj;
-    }
-    delete arr;
-    return newArr;
 }
 
 void Complex::edit()                                                    // редактирование объекта
@@ -58,13 +45,13 @@ void Complex::edit()                                                    // редак
     cin>>this->image;
 }
 
-void Complex::del(Complex* ptr)                                                     // удаление объекта
+void Complex::del(Complex* ptr)                                         // удаление объекта
 {
     this->image = real = 0;
     delete ptr;
 }
 
-void Complex::showObject()                                  // вывод объектов
+void Complex::showObject()                                              // вывод объектов
 {
     cout<<"Z="<<this->real<<"+"<<this->image<<"*i"<<"\t";
     cout<<"|Z|="<<this->mod()<<"\t";

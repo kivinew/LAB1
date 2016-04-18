@@ -216,3 +216,11 @@ LAB1.VC.opendb
 *.depend
 *.cbp
 *.db
+*.opendb
+*.sln
+*.vcxproj
+*.filters
+*.config
+*.vcxproj
+*.vcxproj
+*.vcxproj

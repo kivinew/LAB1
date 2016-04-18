@@ -14,6 +14,7 @@
 #define DEL 46
 
 void menu(Complex**, int);
+Complex** grow(Complex**);
 
 int main()
 {
@@ -21,21 +22,21 @@ int main()
     SetCursorPos(600, 0);
     SetConsoleTitleA("LAB1: Complex numbers");
 
-    int objCount;
+    int arrSize;
     cout<<"¬ведите количество объектов: ";
-    cin>>objCount;
+    cin>>arrSize;
 
     Complex** arrPointers;
-    arrPointers = new Complex*[objCount];                           // массив указателей на объекты
-    for (int i=0; i<objCount;i++)
+    arrPointers = new Complex*[arrSize];                           // массив указателей на объекты
+    for (int i = 0; i<arrSize; i++)
     {
-        arrPointers[i] = new Complex;
+        arrPointers[i] = NULL;
     }
     _getch();
     system("cls");
     do
     {
-        menu(arrPointers, objCount);
+        menu(arrPointers, arrSize);
     } while (1);
     return 0;
     delete[] arrPointers;
@@ -70,14 +71,14 @@ void menu(Complex** objectArray, int countObjects)                  // вывод таб
         }
         case ONE:
         {
-            objectArray = objectArray[i-1]->grow(objectArray);
+            objectArray = grow(objectArray);
             countObjects = objectArray[i]->getCounter();
             objectArray[i]->entering();
             break;
         }
         case TWO:
         {
-            objectArray = objectArray[i-1]->grow(objectArray);
+            //objectArray = grow(objectArray);
 
             break;
         }
@@ -103,7 +104,7 @@ void menu(Complex** objectArray, int countObjects)                  // вывод таб
                     break;
                 case SPACEBAR:                                      // настроить конструктор копировани€!!!!!!!
                     if(i>=objectArray[0]->getCounter())
-                        objectArray[0]->grow(objectArray);
+                        grow(objectArray);
                     new Complex* (objectArray[i]);
                     break;
                 case ESC:
@@ -119,4 +120,18 @@ void menu(Complex** objectArray, int countObjects)                  // вывод таб
             break;
     }
     return;
+}
+
+Complex** grow(Complex** arr)                                       // увеличение массива указателей в два раза
+{
+    int counter = arr[0]->getCounter();
+    Complex** newArr;
+    newArr = new Complex*[counter*2];
+    for (int i = 0; i<counter; i++)
+    {
+        Complex newObj(**(arr+i));
+        *(newArr+i) = &newObj;
+    }
+    delete arr;
+    return newArr;
 }

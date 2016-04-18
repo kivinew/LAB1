@@ -17,7 +17,6 @@ public:
     ~Complex();
     int getCounter();
     void entering();
-    Complex** grow(Complex**);
     void edit();
     void del(Complex*);
     void showObject();
