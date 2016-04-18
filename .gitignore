@@ -224,3 +224,7 @@ LAB1.VC.opendb
 *.vcxproj
 *.vcxproj
 *.vcxproj
+*.vcxproj
+*.filters
+LAB1.vcxproj
+*.filters

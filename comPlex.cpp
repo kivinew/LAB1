@@ -2,61 +2,67 @@
 
 int Complex::counter = 0;
 
-Complex::Complex(): real(0), image(counter++)                           // конструктор по умолчанию
+Complex::Complex(): real(0), image(2*counter++)             // конструктор по умолчанию
 {
 }
 
-Complex::Complex(int re, int im): real(re), image(im)                   // конструктор с параметрами
-{
-    counter++;
-}
-
-Complex::Complex(Complex &obj)                                          // конструктор копировани€
+Complex::Complex(int re, int im): real(re), image(im)       // конструктор с параметрами
 {
     counter++;
-    this->real = obj.real;
-    this->image = obj.image;
 }
 
-Complex::~Complex()                                                     // деструктор
+Complex::Complex(Complex &obj)                              // конструктор копировани€
+{
+    counter++;
+    real = obj.real;
+    image = obj.image;
+}
+
+Complex::~Complex()                                         // деструктор
 {
     counter--;
 }
-int Complex::getCounter()                                               // возврат счЄтчика
+int Complex::getCounter()                                   // возврат счЄтчика
 {
     return counter;
 }
 
-void Complex::entering()                                                // ввод членов комплексного числа
+void Complex::entering()                                    // ввод членов комплексного числа
 {
-    cout<<"¬ведите действительную часть Z: real= ";                     // действительна€ часть
+    cout<<"¬ведите действительную часть Z: real= ";         // действительна€ часть
     cin>>real;
-    cout<<"¬ведите мнимую часть Z: image= ";                            // мнима€ часть
+    cout<<"¬ведите мнимую часть Z: image= ";                // мнима€ часть
     cin>>image;
     cout<<endl;
     return;
 }
 
-void Complex::edit()                                                    // редактирование объекта
+void Complex::edit()                                        // редактирование объекта
 {
     cout<<"¬ведите значение действительной части:"<<endl;
-    cin>>this->real;
+    cin>>real;
     cout<<"¬ведите значение мнимой части:"<<endl;
-    cin>>this->image;
+    cin>>image;
+    return;
 }
 
-void Complex::del(Complex* ptr)                                         // удаление объекта
+void Complex::del(Complex* ptr)                             // удаление объекта
 {
-    this->image = real = 0;
     delete ptr;
+    return;
 }
 
-void Complex::showObject()                                              // вывод объектов
+void Complex::showObject()                                  // вывод объектов
 {
-    cout<<"Z="<<this->real<<"+"<<this->image<<"*i"<<"\t";
-    cout<<"|Z|="<<this->mod()<<"\t";
-    if (this->arg()!=0) cout<<"arg Z="<<this->arg()<<"\t"<<endl;
-    else cout<<"n/a"<<endl;
+    cout<<"Z="<<real
+        <<"+"<<image
+        <<"*i"<<"\t"
+        <<"|Z|="<<mod()
+        <<"\t";
+    if (arg()!=0) 
+        cout<<"arg Z="<<arg()<<"\t"<<endl;
+    else 
+        cout<<"n/a"<<endl;
     return;
 }
 

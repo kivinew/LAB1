@@ -13,8 +13,8 @@
 #define ENTER 13
 #define DEL 46
 
-void menu(Complex**, int);
-Complex** grow(Complex**);
+void menu(Complex** &, int);
+Complex** grow(Complex**, int &);
 
 int main()
 {
@@ -22,17 +22,14 @@ int main()
     SetCursorPos(600, 0);
     SetConsoleTitleA("LAB1: Complex numbers");
 
-    int arrSize;
+    Complex** arrPointers;                                  // объявление массива указателей
+    int arrSize;                                            // размер массива
+
     cout<<"Введите количество объектов: ";
     cin>>arrSize;
 
-    Complex** arrPointers;
-    arrPointers = new Complex*[arrSize];                           // массив указателей на объекты
-    for (int i = 0; i<arrSize; i++)
-    {
-        arrPointers[i] = NULL;
-    }
-    _getch();
+    arrPointers = new Complex*[arrSize]();                  // определение массива
+
     system("cls");
     do
     {
@@ -42,22 +39,28 @@ int main()
     delete[] arrPointers;
 }
 
-void menu(Complex** objectArray, int countObjects)                  // вывод таблицы объектов и меню
+void menu(Complex** &objectArray, int size)                 // вывод таблицы объектов и меню
 {
-    int objNumber, i;
+    int objNumber;
     char choice;
+
     system("cls");
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
-    for (i = 0; i<(objectArray[0]->getCounter()); i++)              // таблица объектов
+    for (int i = 0; i<size; i++)  // таблица объектов
     {
-        cout<<i<<": ";
-        (objectArray[i])->showObject();
+        if (objectArray[i]!=NULL)
+        {
+            cout<<i<<": ";
+            (objectArray[i])->showObject();
+        }
+        else
+            cout<<"empty"<<endl;
     }
-    cout<<"\n\tSPACEBAR - обновить"<<endl;                          // меню
-    cout<<"\t1 - добавить объект со своими параметрами"<<endl;
-    cout<<"\t2 - добавить объект"<<endl;
-    cout<<"\tENTER - выбрать для работы один объект"<<endl;
-    cout<<"\tESC - выход"<<endl;
+    cout<<"\n\tSPACEBAR - обновить"<<endl                   // меню
+        <<"\t1 - добавить объект со своими параметрами"<<endl
+        <<"\t2 - добавить объект"<<endl
+        <<"\tENTER - выбрать для работы один объект"<<endl
+        <<"\tESC - выход"<<endl;
     while (!_kbhit())
     {
     }
@@ -71,48 +74,64 @@ void menu(Complex** objectArray, int countObjects)                  // вывод таб
         }
         case ONE:
         {
-            objectArray = grow(objectArray);
-            countObjects = objectArray[i]->getCounter();
-            objectArray[i]->entering();
+            for (int i = 0; i<size; i++)
+            {
+                if (objectArray[i]==NULL)                   // если указатель нулевой, то
+                {                                           // ввести значения полей объекта
+                    objectArray[i] = new Complex;
+                    objectArray[i]->edit();
+                    return; // break; ?
+                }
+
+            }
             break;
         }
         case TWO:
         {
-            //objectArray = grow(objectArray);
-
+            objectArray = grow(objectArray, size);
             break;
         }
         case ENTER:
         {
             cout<<"Укажите номер объекта: ";
             cin>>objNumber;
-            if (!(objNumber>=(objectArray[0]->getCounter()))&&!(objNumber<0))
+            int countObjects = objectArray[0]->getCounter();
+            if (!(objNumber>=size)&&!(objNumber<0))
             {
-                cout<<"DELETE - удалить объект"<<endl;
-                cout<<"ENTER- редактировать объект"<<endl;
-                cout<<"SPACEBAR - скопировать объект"<<endl;
-                cout<<"ESC - отмена"<<endl;
-                while (!_kbhit());
-                choice = _getch();
-                switch (choice)
+                if (countObjects!=0)
                 {
-                case DEL:
-                    objectArray[objNumber]->del(objectArray[objNumber]);
-                    break;
-                case ENTER:
-                    objectArray[objNumber]->edit();
-                    break;
-                case SPACEBAR:                                      // настроить конструктор копирования!!!!!!!
-                    if(i>=objectArray[0]->getCounter())
-                        grow(objectArray);
-                    new Complex* (objectArray[i]);
-                    break;
-                case ESC:
-                    break;
+                    cout<<"DELETE - удалить объект"<<endl
+                        <<"ENTER- редактировать объект"<<endl
+                        <<"SPACEBAR - скопировать объект"<<endl
+                        <<"ESC - отмена"<<endl;
+                    while (!_kbhit());
+                    choice = _getch();
+                    switch (choice)
+                    {
+                    case DEL:
+                        objectArray[objNumber]->del(objectArray[objNumber]);
+                        break;
+                    case ENTER:
+                        objectArray[objNumber]->edit();
+                        break;
+                    case SPACEBAR:                          // настроить конструктор копирования!!!!!!!
+
+                        break;
+                    case ESC:
+                        break;
+                    }
+                }
+                else
+                {
+                    cout<<"Массив пуст! Создай объект."<<endl;
+                    _getch();
                 }
             }
-            else cout<<"Такого объекта нет!";
-            _getch();
+            else
+            {
+                cout<<"Выход за пределы массива!";
+                _getch();
+            }
             break;
         }
         case ESC:
@@ -122,16 +141,16 @@ void menu(Complex** objectArray, int countObjects)                  // вывод таб
     return;
 }
 
-Complex** grow(Complex** arr)                                       // увеличение массива указателей в два раза
+Complex** grow(Complex** arr, int &size)                    // увеличение массива указателей в два раза
 {
-    int counter = arr[0]->getCounter();
-    Complex** newArr;
-    newArr = new Complex*[counter*2];
-    for (int i = 0; i<counter; i++)
+    Complex** newArr;                                       // новый массив
+    size *= 2;
+    newArr = new Complex*[size];                            // размером counter*2
+    for (int i = 0; i<size; i++)
     {
-        Complex newObj(**(arr+i));
-        *(newArr+i) = &newObj;
+        newArr[i] = NULL;
     }
     delete arr;
+    cout<<size<<endl;
     return newArr;
 }
