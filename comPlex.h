@@ -15,10 +15,10 @@ public:
     Complex(int, int);
     Complex(Complex &);
     ~Complex();
-    int getCounter();
-    void entering();
+
+    static int getCounter();
     void edit();
-    void del(Complex*);
+    void del(Complex* &);
     void showObject();
     double mod();
     double arg();

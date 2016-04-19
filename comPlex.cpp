@@ -2,8 +2,9 @@
 
 int Complex::counter = 0;
 
-Complex::Complex(): real(0), image(2*counter++)             // конструктор по умолчанию
+Complex::Complex(): real(255), image(255)                   // конструктор по умолчанию
 {
+    counter++;
 }
 
 Complex::Complex(int re, int im): real(re), image(im)       // конструктор с параметрами
@@ -20,45 +21,32 @@ Complex::Complex(Complex &obj)                              // конструктор копир
 
 Complex::~Complex()                                         // деструктор
 {
-    counter--;
+    cout<<"ќбъект "<<counter--<<" удалЄн"<<endl;    
 }
+
 int Complex::getCounter()                                   // возврат счЄтчика
 {
     return counter;
 }
 
-void Complex::entering()                                    // ввод членов комплексного числа
-{
-    cout<<"¬ведите действительную часть Z: real= ";         // действительна€ часть
-    cin>>real;
-    cout<<"¬ведите мнимую часть Z: image= ";                // мнима€ часть
-    cin>>image;
-    cout<<endl;
-    return;
-}
-
 void Complex::edit()                                        // редактирование объекта
 {
-    cout<<"¬ведите значение действительной части:"<<endl;
+    cout<<"¬ведите действительную часть Z: real= "<<endl;
     cin>>real;
-    cout<<"¬ведите значение мнимой части:"<<endl;
+    cout<<"¬ведите мнимую часть Z: image= "<<endl;
     cin>>image;
     return;
 }
 
-void Complex::del(Complex* ptr)                             // удаление объекта
+void Complex::del(Complex* &obj)                            // удаление указател€ на объект
 {
-    delete ptr;
+    obj = NULL;
     return;
 }
 
 void Complex::showObject()                                  // вывод объектов
 {
-    cout<<"Z="<<real
-        <<"+"<<image
-        <<"*i"<<"\t"
-        <<"|Z|="<<mod()
-        <<"\t";
+    cout<<"Z="<<real<<"+"<<image<<"*i"<<"\t"<<"|Z|="<<mod()<<"\t";
     if (arg()!=0) 
         cout<<"arg Z="<<arg()<<"\t"<<endl;
     else 
@@ -66,12 +54,12 @@ void Complex::showObject()                                  // вывод объектов
     return;
 }
 
-double Complex::mod()                                                   // модуль
+double Complex::mod()                                       // модуль
 {
     return sqrt(real*real+image*image);
 }
 
-double Complex::arg()                                                   // аргумент
+double Complex::arg()                                       // аргумент
 {
     if (real>0) return atan(image/real);
     if (real<0)
