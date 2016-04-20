@@ -15,7 +15,7 @@
 
 void menu(Complex** &, int &);
 void grow(Complex** &, int &);
-void createObj(Complex** &, int &, int);
+void createObj(Complex** &, int &, int number=0);
 void showTable(Complex** &, int);
 
 int main()
@@ -50,8 +50,8 @@ void menu(Complex** &objectArray, int &size)                 // вывод таблицы об
 
     showTable(objectArray, size);
 
-        cout<<"\t1        - добавить один объект"<<endl                 // меню
-            <<"\tENTER    - выбрать объект дл€ работы с ним"<<endl
+        cout<<"\t1        - вставить один объект"<<endl                 // меню
+            <<"\tENTER    - выбрать элемент массива"<<endl
             <<"\tESC      - выход из программы"<<endl;
     while (!_kbhit());
     choice = _getch();
@@ -59,7 +59,7 @@ void menu(Complex** &objectArray, int &size)                 // вывод таблицы об
     {
         case ONE:
         {
-            createObj(objectArray, size, Complex::getCounter());
+            createObj(objectArray, size);
             break;
         }
         case ENTER:
@@ -69,7 +69,7 @@ void menu(Complex** &objectArray, int &size)                 // вывод таблицы об
             int countObjects = Complex::getCounter();               // количество объектов в массиве
             if (!(number>=size) && !(number<0))
             {
-                cout<<endl<<"ENTER    - ввести данные"<<endl;
+                cout<<endl<<"ENTER    - ввести данные в пол€ объекта"<<endl;
                 if (objectArray[number]!=NULL)
                 {
                     cout<<"DELETE   - удалить объект"<<endl
@@ -143,12 +143,14 @@ void createObj(Complex** &objectArray, int &size, int number)
 {
     if (Complex::getCounter()==size)                        // если количество объектов равно размеру массива
         grow(objectArray, size);                            // то его нужно увеличить
-    if (objectArray[number]==NULL)                          // если указатель нулевой, то
+    for (int i=number; i<size; i++)
+	{
+		if (objectArray[i]==NULL)                          	// если указатель нулевой, то
         {                                                   // 
-            objectArray[number] = new Complex();            // создать в этой €чейке объект
-            
+            objectArray[i] = new Complex();            		// создать в этой €чейке объект
             return;
         }
+	}
     return;
 }
 

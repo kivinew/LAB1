@@ -10,6 +10,7 @@ class Complex
     static double const pi ;
     static int counter;
     double real, image;
+    int num;
 public:
     Complex();
     Complex(int, int);

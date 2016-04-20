@@ -3,9 +3,9 @@
 int Complex::counter = 0;
 double const Complex::pi = 3.1415926536;
 
-Complex::Complex(): real(255), image(255)                   // конструктор по умолчанию
+Complex::Complex(): real(0), image(0)                   // конструктор по умолчанию
 {
-    counter++;
+    num = counter++;                                    // добавлю поле с номером объекта
 }
 
 Complex::Complex(int re, int im): real(re), image(im)       // конструктор с параметрами
