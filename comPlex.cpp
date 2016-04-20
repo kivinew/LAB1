@@ -1,6 +1,7 @@
 #include "comPlex.h"
 
 int Complex::counter = 0;
+const double pi = 3.141592654;
 
 Complex::Complex(): real(255), image(255)                   // конструктор по умолчанию
 {
