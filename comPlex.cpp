@@ -1,6 +1,7 @@
 #include "comPlex.h"
 
 int Complex::counter = 0;
+double const Complex::pi = 3.1415926536;
 
 Complex::Complex(): real(255), image(255)                   // конструктор по умолчанию
 {
@@ -21,7 +22,7 @@ Complex::Complex(Complex &obj)                              // конструктор копир
 
 Complex::~Complex()                                         // деструктор
 {
-    cout<<"Объект "<<counter--<<" удалён"<<endl;    
+    cout<<"ДЕСТРУКТОР: "<<counter--<<" объект "<<" удалён"<<endl;
 }
 
 int Complex::getCounter()                                   // возврат счётчика
@@ -29,18 +30,27 @@ int Complex::getCounter()                                   // возврат счётчика
     return counter;
 }
 
-void Complex::edit()                                        // редактирование объекта
+void Complex::edit(Complex* obj)                                        // редактирование объекта
 {
-    cout<<"Введите действительную часть Z: real= "<<endl;
-    cin>>real;
-    cout<<"Введите мнимую часть Z: image= "<<endl;
-    cin>>image;
+    cout<<endl<<"РЕДАКТОР: Введите действительную часть Z: real= "<<endl;
+    cin>>obj->real;
+    cout<<"РЕДАКТОР: Введите мнимую часть Z: image= "<<endl;
+    cin>>obj->image;
     return;
 }
 
 void Complex::del(Complex* &obj)                            // удаление указателя на объект
 {
-    obj = NULL;
+    if (obj!=NULL)
+    {
+        obj = NULL;
+        counter--;
+    }
+    else
+    {
+        cout<<"Объекта нет!"<<endl;
+        _getch();
+    }
     return;
 }
 

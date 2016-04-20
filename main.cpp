@@ -15,7 +15,7 @@
 
 void menu(Complex** &, int &);
 void grow(Complex** &, int &);
-static void createObj(Complex** &, int &);
+void createObj(Complex** &, int &, int);
 void showTable(Complex** &, int);
 
 int main()
@@ -27,11 +27,11 @@ int main()
     Complex** arrPointers;                                  // объявление массива указателей
     int arrSize;                                            // размер массива
 
-    cout<<"Введите количество объектов: ";
+    cout<<"Введите количество объектов (не менее 1): ";
     cin>>arrSize;
-    if (arrSize==0) 
+    if (arrSize==0)
         arrSize = 1;
-    arrPointers = new Complex*[arrSize]();                  // определение массива
+    arrPointers = new Complex* [arrSize]();                   // определение массива
 
     system("cls");
     do
@@ -44,77 +44,59 @@ int main()
 
 void menu(Complex** &objectArray, int &size)                 // вывод таблицы объектов и меню
 {
-    int objNumber;
+    int number;
     int choice;
     system("cls");
 
     showTable(objectArray, size);
 
-    cout<<"\n\tSPACEBAR - обновить"<<endl                   // меню
-        <<"\t1 - добавить объект"<<endl
-        <<"\t2 - скопировать объект"<<endl
-        <<"\tENTER - выбрать для работы один объект"<<endl
-        <<"\tESC - выход"<<endl;
+        cout<<"\t1        - добавить один объект"<<endl                 // меню
+            <<"\tENTER    - выбрать объект для работы с ним"<<endl
+            <<"\tESC      - выход из программы"<<endl;
     while (!_kbhit());
     choice = _getch();
     switch (choice)
     {
-        case SPACEBAR:
-        {
-            break;
-        }
         case ONE:
         {
-            createObj(objectArray, size);
-            break;
-        }
-        case TWO:
-        {
-
+            createObj(objectArray, size, Complex::getCounter());
             break;
         }
         case ENTER:
         {
             cout<<"Укажите номер объекта: ";
-            cin>>objNumber;
-
-            int countObjects = objectArray[0]->getCounter();        // количество объектов в массиве
-            if (!(objNumber>=size) && !(objNumber<0))
+            cin>>number;
+            int countObjects = Complex::getCounter();               // количество объектов в массиве
+            if (!(number>=size) && !(number<0))
             {
-                if (countObjects!=0)                                // входим в подменю если количество объеков не равно нулю
+                cout<<endl<<"ENTER    - ввести данные"<<endl;
+                if (objectArray[number]!=NULL)
                 {
-                    cout<<endl
-                        <<"DELETE - удалить объект"<<endl
-                        <<"ENTER- редактировать объект"<<endl
-                        <<"SPACEBAR - скопировать объект"<<endl
-                        <<"Для отмены нажмите любую другую клавишу"<<endl;
-                    while (!_kbhit());
-
-                    choice = _getch();                      // вызывается дважды!!!  1) получаем символ
-                    choice = _getch();                      //                       2) получаем код символа
-                    
-                    switch (choice)
-                    {
-
-                    case DEL:                                       // удаление указателя на объект                             !!!
-                        objectArray[0]->del(objectArray[objNumber]);// вызываю метод del() для нулевого объекта                 !!!
-                        break;                                      // и передаю в него указатель на выбранный объект           !!!
-
-                    case ENTER:                                     // изменить объект
-                        if (objectArray[objNumber]!=NULL)           // если указатель не равер нулю
-                            objectArray[objNumber]->edit();         // то его можно изменить,
-                        else                                        //
-                            createObj(objectArray, size);           // а иначе создать
-                        break;
-                    case SPACEBAR:                                  // настроить конструктор копирования                        !!!
-                        //copy();
-                        break;
-                    }
+                    cout<<"DELETE   - удалить объект"<<endl
+                        <<"SPACEBAR - скопировать объект"<<endl;
                 }
-                else
+                cout<<"Для отмены нажмите любую другую клавишу"<<endl;
+                while (!_kbhit());
+
+                choice = _getch();                                  // вызывается дважды!!!  1) получаем символ
+                choice = _getch();                                  //                       2) получаем код символа
+                    
+                switch (choice)
                 {
-                    cout<<"Массив пуст! Создай объект."<<endl;
-                    _getch();
+                case ENTER:                                                 // изменить объект
+                    if (objectArray[number]!=NULL)                          // если указатель не равер нулю
+                        objectArray[number]->edit(objectArray[number]);     // то его можно изменить,
+                    else                                                    //
+                        createObj(objectArray, size, number);               // а иначе создать
+                    break;
+
+                case DEL:                                           // удаление указателя на объект                             !!!
+                    objectArray[0]->del(objectArray[number]);       // вызываю метод del() для нулевого объекта                 !!!
+                    break;                                          // и передаю в него указатель на выбранный объект           !!!
+
+                case SPACEBAR:                                      // настроить конструктор копирования                !!!
+                    //copy();
+                    break;
                 }
             }
             else
@@ -128,7 +110,6 @@ void menu(Complex** &objectArray, int &size)                 // вывод таблицы об
             for (int i = 0; i<size; i++)
             {
                 delete objectArray[i];                      // удаление объектов массива
-                objectArray[i] = NULL;                      // и обнуление указателей
             }
             delete[] objectArray;                           // удаление массива
             cout<<"Массив удалён"<<endl;
@@ -158,19 +139,16 @@ void grow(Complex** &arr, int &size)                // увеличение массива указат
     return ;
 }
 
-void createObj(Complex** &objectArray, int &size)
+void createObj(Complex** &objectArray, int &size, int number)
 {
-    if (objectArray[0]->getCounter()==size)         // если количество объектов равно размеру массива
-        grow(objectArray, size);                    // то его нужно увеличить
-    for (int i = 0; i<size; i++)
-    {
-        if (objectArray[i]==NULL)                           // если указатель нулевой, то
+    if (Complex::getCounter()==size)                        // если количество объектов равно размеру массива
+        grow(objectArray, size);                            // то его нужно увеличить
+    if (objectArray[number]==NULL)                          // если указатель нулевой, то
         {                                                   // 
-            objectArray[i] = new Complex();                 // создать в этой ячейке объект
+            objectArray[number] = new Complex();            // создать в этой ячейке объект
             
             return;
         }
-    }
     return;
 }
 
@@ -179,7 +157,7 @@ void showTable(Complex** &arr, int size)
     cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
     for (int i = 0; i<size; i++)                            // таблица объектов
     {
-        cout<<i<<": ";
+        cout<<i+1<<": ";
         if (arr[i]!=NULL)                                   // если указатель не равен нулю
         {
             (arr[i])->showObject();                         // то выводим объект

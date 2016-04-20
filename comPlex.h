@@ -7,7 +7,7 @@ using namespace std;
 
 class Complex
 {
-    const double pi = 3.141592654;
+    static double const pi ;
     static int counter;
     double real, image;
 public:
@@ -17,7 +17,7 @@ public:
     ~Complex();
 
     static int getCounter();
-    void edit();
+    static void edit(Complex*);
     void del(Complex* &);
     void showObject();
     double mod();
