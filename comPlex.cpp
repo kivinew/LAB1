@@ -2,49 +2,49 @@
 
 int Complex::counter = 0;
 
-Complex::Complex(): real(255), image(255)                   // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
+Complex::Complex(): real(255), image(255)                   // конструктор по умолчанию
 {
     counter++;
 }
 
-Complex::Complex(int re, int im): real(re), image(im)       // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё
+Complex::Complex(int re, int im): real(re), image(im)       // конструктор с параметрами
 {
     counter++;
 }
 
-Complex::Complex(Complex &obj)                              // РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
+Complex::Complex(Complex &obj)                              // конструктор копирования
 {
     counter++;
     real = obj.real;
     image = obj.image;
 }
 
-Complex::~Complex()                                         // РґРµСЃС‚СЂСѓРєС‚РѕСЂ
+Complex::~Complex()                                         // деструктор
 {
-    cout<<"ГЋГЎГєГҐГЄГІ "<<counter--<<" ГіГ¤Г Г«ВёГ­"<<endl;    
+    cout<<"Объект "<<counter--<<" удалён"<<endl;    
 }
 
-int Complex::getCounter()                                   // РїРѕР»СѓС‡РёС‚СЊ СЃС‡С‘С‚С‡РёРє
+int Complex::getCounter()                                   // возврат счётчика
 {
     return counter;
 }
 
-void Complex::edit()                                        // СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РѕР±СЉРµРєС‚Р°
+void Complex::edit()                                        // редактирование объекта
 {
-    cout<<"Г‚ГўГҐГ¤ГЁГІГҐ Г¤ГҐГ©Г±ГІГўГЁГІГҐГ«ГјГ­ГіГѕ Г·Г Г±ГІГј Z: real= "<<endl;
+    cout<<"Введите действительную часть Z: real= "<<endl;
     cin>>real;
-    cout<<"Г‚ГўГҐГ¤ГЁГІГҐ Г¬Г­ГЁГ¬ГіГѕ Г·Г Г±ГІГј Z: image= "<<endl;
+    cout<<"Введите мнимую часть Z: image= "<<endl;
     cin>>image;
     return;
 }
 
-void Complex::del(Complex* &obj)                            // СѓРґР°Р»РёС‚СЊ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РѕР±СЉРµРєС‚ РёР· РјР°СЃСЃРёРІР°
+void Complex::del(Complex* &obj)                            // удаление указателя на объект
 {
     obj = NULL;
     return;
 }
 
-void Complex::showObject()                                  // РІС‹РІРѕРґ РѕР±СЉРµРєС‚Р°
+void Complex::showObject()                                  // вывод объектов
 {
     cout<<"Z="<<real<<"+"<<image<<"*i"<<"\t"<<"|Z|="<<mod()<<"\t";
     if (arg()!=0) 
@@ -54,12 +54,12 @@ void Complex::showObject()                                  // РІС‹РІРѕРґ РѕР±СЉ
     return;
 }
 
-double Complex::mod()                                       // РјРѕРґСѓР»СЊ |Z|
+double Complex::mod()                                       // модуль
 {
     return sqrt(real*real+image*image);
 }
 
-double Complex::arg()                                       // Р°СЂРіСѓРјРµРЅС‚ arg Z
+double Complex::arg()                                       // аргумент
 {
     if (real>0) return atan(image/real);
     if (real<0)
