@@ -84,10 +84,10 @@ int menu(Complex** &objectArray, int &size)                                 // в
                     else                                                    //
                         createObj(objectArray, size, number);               // а иначе создать
                     break;
-                case DEL:                                                           // --------удаление указателя на объект---------
-                    Complex::del(objectArray[number]);                       // вызываю метод del() для нулевого объекта                 !!!
-                    break;                                                          // и передаю в него указатель на выбранный объект           !!!
-                case SPACEBAR:                                                      // --------настроить конструктор копирования---------
+                case DEL:                                                   // --------удаление указателя на объект---------
+                    Complex::del(objectArray[number]);
+                    break;
+                case SPACEBAR:                                              // --------настроить конструктор копирования---------
                     //copy();
                     break;
                 }

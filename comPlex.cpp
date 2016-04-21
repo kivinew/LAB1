@@ -1,28 +1,33 @@
 ﻿#include "comPlex.h"
 
-int Complex::counter = 0;
+int Complex::counter;
+int Complex::num;
 double const Complex::pi = 3.1415926536;
 
 Complex::Complex(): real(0), image(1)                       // конструктор по умолчанию
 {
-    num = counter++;                                        // добавлю поле с номером объекта
+    objNum = ++num;                                         // добавлю поле с номером объекта
+    ++counter;
 }
 
 Complex::Complex(int re, int im): real(re), image(im)       // конструктор с параметрами
 {
-    num = counter++;
+    objNum = ++num;
+    ++counter;
 }
 
 Complex::Complex(Complex &obj)                              // конструктор копирования
 {
-    num = counter++;
+    objNum = ++num;
+    ++counter;
     real = obj.real;
     image = obj.image;
 }
 
 Complex::~Complex()                                         // деструктор
 {
-    cout<<"ДЕСТРУКТОР: counter="<<num<<" объект "<<" удалён"<<endl;
+    cout<<"ДЕСТРУКТОР: объект, созданный "<<objNum<<"-м удален. Осталось "<<--counter<<" объектов."<<endl;
+    for (int i = 0; i<200000000; ++i);
 }
 
 int Complex::getCounter()                                   // возврат счётчика
@@ -45,12 +50,6 @@ void Complex::del(Complex* &obj)                            // удаление 
     {
         delete obj;
         obj = NULL;
-        counter--;
-    }
-    else
-    {
-        cout<<"Объекта нет!"<<endl;
-        _getch();
     }
     return;
 }
