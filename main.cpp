@@ -17,6 +17,7 @@ void menu(Complex** &, int &);
 void grow(Complex** &, int &);
 void createObj(Complex** &, int &, int number=0);
 void showTable(Complex** &, int);
+void exitProg(Complex** &, int);
 
 int main()
 {
@@ -107,14 +108,7 @@ void menu(Complex** &objectArray, int &size)                 // вывод таблицы об
             break;
         }
         case ESC:
-            for (int i = 0; i<size; i++)
-            {
-                delete objectArray[i];                      // удаление объектов массива
-            }
-            delete[] objectArray;                           // удаление массива
-            cout<<"Массив удалён"<<endl;
-            _getch();
-            exit(0);                                        // выход из программы
+            exitProg(objectArray, size);
             break;
     }
     return;
@@ -139,15 +133,15 @@ void grow(Complex** &arr, int &size)                // увеличение массива указат
     return ;
 }
 
-void createObj(Complex** &objectArray, int &size, int number)
+void createObj(Complex** &objectArray, int &size, int elementNumber)
 {
     if (Complex::getCounter()==size)                        // если количество объектов равно размеру массива
         grow(objectArray, size);                            // то его нужно увеличить
-    for (int i=number; i<size; i++)
+    for (int i=elementNumber; i<size; i++)
 	{
 		if (objectArray[i]==NULL)                          	// если указатель нулевой, то
         {                                                   // 
-            objectArray[i] = new Complex();            		// создать в этой ячейке объект
+            *(objectArray+i) = new Complex();               // создать в этой ячейке объект
             return;
         }
 	}
@@ -167,4 +161,17 @@ void showTable(Complex** &arr, int size)
         else
             cout<<"empty"<<endl;
     }
+}
+
+void exitProg(Complex** &arr, int size)
+{
+    for (int i = 0; i<size; i++)
+    {
+        delete arr[i];                      // удаление объектов массива
+    }
+    delete[] arr;                           // удаление массива
+    cout<<"Массив удалён"<<endl;
+    _getch();
+    exit(0);                                // выход из программы
+    return;
 }
