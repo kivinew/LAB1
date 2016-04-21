@@ -39,7 +39,7 @@ void Complex::edit()                                        // редактир�
     return;
 }
 
-void Complex::del(Complex* &obj)                            // удаление указателя на объект
+void Complex::del(Complex* &obj)                            // удаление объекта
 {
     if (obj!=NULL)
     {
