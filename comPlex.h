@@ -22,7 +22,7 @@ public:
 
     static int getCounter();
     void edit();
-    void del(Complex* &);
+    static void del(Complex* &);
     void showObject();
     double mod();
     double arg();
