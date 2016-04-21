@@ -16,17 +16,15 @@ Complex::Complex(int re, int im): real(re), image(im)       // конструк�
     ++counter;
 }
 
-Complex::Complex(Complex &obj)                              // конструктор копирования
+Complex::Complex(Complex &obj): real(obj.real), image(obj.image)        // конструктор копирования
 {
     objNum = ++num;
     ++counter;
-    real = obj.real;
-    image = obj.image;
 }
 
 Complex::~Complex()                                         // деструктор
 {
-    cout<<"ДЕСТРУКТОР: объект, созданный "<<objNum<<"-м удален. Осталось "<<--counter<<" объектов."<<endl;
+    cout<<"ДЕСТРУКТОР: id"<<objNum<<" удален."<<endl;
     for (int i = 0; i<200000000; ++i);
 }
 
@@ -58,7 +56,7 @@ void Complex::showObject()                                  // вывод объ
 {
     cout<<"Z="<<real<<"+"<<image<<"*i"<<"\t"<<"|Z|="<<mod()<<"\t";
     if (arg()!=0) 
-        cout<<"arg Z="<<arg()<<"\t"<<endl;
+        cout<<"arg Z="<<arg()*180/pi<<"\t"<<endl;
     else 
         cout<<"n/a"<<endl;
     return;
