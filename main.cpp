@@ -17,7 +17,7 @@ void menu(Complex** &, int &);
 void grow(Complex** &, int &);
 void createObj(Complex** &, int &, int number=0);
 void showTable(Complex** &, int);
-void exitProg(Complex** &, int);
+void deleteAll(Complex** &, int);
 
 int main()
 {
@@ -108,7 +108,8 @@ void menu(Complex** &objectArray, int &size)                 // вывод таблицы об
             break;
         }
         case ESC:
-            exitProg(objectArray, size);
+            deleteAll(objectArray, size);
+            exit(0);                                // выход из программы
             break;
     }
     return;
@@ -163,7 +164,7 @@ void showTable(Complex** &arr, int size)
     }
 }
 
-void exitProg(Complex** &arr, int size)
+void deleteAll(Complex** &arr, int size)
 {
     for (int i = 0; i<size; i++)
     {
@@ -172,6 +173,5 @@ void exitProg(Complex** &arr, int size)
     delete[] arr;                           // удаление массива
     cout<<"Массив удалён"<<endl;
     _getch();
-    exit(0);                                // выход из программы
     return;
 }
