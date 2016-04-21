@@ -13,7 +13,7 @@
 #define ENTER       13
 #define DEL         83 
 
-void menu(Complex** &, int &);
+int menu(Complex** &, int &);
 void grow(Complex** &, int &);
 void createObj(Complex** &, int &, int number=0);
 void showTable(Complex** &, int);
@@ -22,28 +22,24 @@ void deleteAll(Complex** &, int);
 int main()
 {
     setlocale(LC_ALL, "Ru");
-    SetCursorPos(600, 0);
     SetConsoleTitleA("LAB1: Complex numbers");
 
-    Complex** arrPointers;                                  // объ€вление массива указателей
-    int arrSize;                                            // размер массива
+    Complex** arrPointers;                                          // объ€вление массива указателей
+    int arrSize;                                                    // размер массива
 
     cout<<"¬ведите количество объектов (не менее 1): ";
     cin>>arrSize;
     if (arrSize==0)
         arrSize = 1;
-    arrPointers = new Complex* [arrSize]();                   // определение массива
-
+    arrPointers = new Complex* [arrSize]();                         // определение массива
     system("cls");
-    do
-    {
-        menu(arrPointers, arrSize);
-    } while (1);
-    delete[] arrPointers;
+
+    while (menu(arrPointers, arrSize)==TRUE);
+
     return 0;
 }
 
-void menu(Complex** &objectArray, int &size)                 // вывод таблицы объектов и меню
+int menu(Complex** &objectArray, int &size)                         // вывод таблицы объектов и меню
 {
     int number;
     int choice;
@@ -51,19 +47,19 @@ void menu(Complex** &objectArray, int &size)                 // вывод таблицы об
 
     showTable(objectArray, size);
 
-        cout<<"\t1        - вставить один объект"<<endl                 // меню
+        cout<<"\t1        - вставить один объект"<<endl             // меню
             <<"\tENTER    - выбрать элемент массива"<<endl
             <<"\tESC      - выход из программы"<<endl;
     while (!_kbhit());
     choice = _getch();
     switch (choice)
     {
-        case ONE:
+        case ONE:                                                   // ---------вставить объект---------
         {
             createObj(objectArray, size);
             break;
         }
-        case ENTER:
+        case ENTER:                                                 // --------выбрать один элемент---------
         {
             cout<<"”кажите номер объекта: ";
             cin>>number;
@@ -77,25 +73,21 @@ void menu(Complex** &objectArray, int &size)                 // вывод таблицы об
                         <<"SPACEBAR - скопировать объект"<<endl;
                 }
                 cout<<"ƒл€ отмены нажмите любую другую клавишу"<<endl;
-                while (!_kbhit());
-
+                while (!_kbhit());                                  // ожидание выбора клавиши
                 choice = _getch();                                  // вызываетс€ дважды!!!  1) получаем символ
-                choice = _getch();                                  //                       2) получаем код символа
-                    
+                if (choice>83) choice = _getch();                   //                       2) получаем код символа
                 switch (choice)
                 {
-                case ENTER:                                                 // изменить объект
+                case ENTER:                                                 // ------изменить объект-------
                     if (objectArray[number]!=NULL)                          // если указатель не равер нулю
-                        objectArray[number]->edit(objectArray[number]);     // то его можно изменить,
+                        objectArray[number]->edit();                        // то его можно изменить,
                     else                                                    //
                         createObj(objectArray, size, number);               // а иначе создать
                     break;
-
-                case DEL:                                           // удаление указател€ на объект                             !!!
+                case DEL:                                           // --------удаление указател€ на объект---------
                     objectArray[0]->del(objectArray[number]);       // вызываю метод del() дл€ нулевого объекта                 !!!
                     break;                                          // и передаю в него указатель на выбранный объект           !!!
-
-                case SPACEBAR:                                      // настроить конструктор копировани€                !!!
+                case SPACEBAR:                                      // --------настроить конструктор копировани€---------
                     //copy();
                     break;
                 }
@@ -107,12 +99,12 @@ void menu(Complex** &objectArray, int &size)                 // вывод таблицы об
             }
             break;
         }
-        case ESC:
+        case ESC:                                                   // ---------выход из программы---------
             deleteAll(objectArray, size);
-            exit(0);                                // выход из программы
+            return FALSE;
             break;
     }
-    return;
+    return TRUE;
 }
 
 void grow(Complex** &arr, int &size)                // увеличение массива указателей в два раза
@@ -142,7 +134,7 @@ void createObj(Complex** &objectArray, int &size, int elementNumber)
 	{
 		if (objectArray[i]==NULL)                          	// если указатель нулевой, то
         {                                                   // 
-            *(objectArray+i) = new Complex();               // создать в этой €чейке объект
+            objectArray[i] = new Complex();               // создать в этой €чейке объект
             return;
         }
 	}
@@ -154,7 +146,7 @@ void showTable(Complex** &arr, int size)
     cout<<"ќбъект :\t"<<"ћодуль :\t"<<"јргумент :\t"<<endl;
     for (int i = 0; i<size; i++)                            // таблица объектов
     {
-        cout<<i+1<<": ";
+        cout<<i<<": ";
         if (arr[i]!=NULL)                                   // если указатель не равен нулю
         {
             (arr[i])->showObject();                         // то выводим объект

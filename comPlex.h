@@ -2,7 +2,10 @@
 #include <iostream>
 #include <conio.h>
 #include <math.h>
-
+#ifdef _DEBUG
+#include <crtdbg.h>
+#define _CRTDBG_MAP_ALLOC
+#endif
 using namespace std;
 
 class Complex
@@ -18,7 +21,7 @@ public:
     ~Complex();
 
     static int getCounter();
-    static void edit(Complex*);
+    void edit();
     void del(Complex* &);
     void showObject();
     double mod();
