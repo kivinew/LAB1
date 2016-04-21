@@ -41,8 +41,6 @@ int main()
 
 int menu(Complex** &objectArray, int &size)                                 // вывод таблицы объектов и меню
 {
-    int number;
-    int choice;
     system("cls");
 
     showTable(objectArray, size);
@@ -51,6 +49,7 @@ int menu(Complex** &objectArray, int &size)                                 // в
             <<"\tENTER    - выбрать элемент массива"<<endl
             <<"\tESC      - выход из программы"<<endl;
     while (!_kbhit());
+    int choice;
     choice = _getch();
     switch (choice)
     {
@@ -61,6 +60,7 @@ int menu(Complex** &objectArray, int &size)                                 // в
         }
         case ENTER:                                                         // --------выбрать один элемент---------
         {
+            int number;
             cout<<"”кажите номер объекта: ";
             cin>>number;
             int countObjects = Complex::getCounter();                       // количество объектов в массиве
@@ -88,7 +88,8 @@ int menu(Complex** &objectArray, int &size)                                 // в
                     Complex::del(objectArray[number]);
                     break;
                 case SPACEBAR:                                              // --------настроить конструктор копировани€---------
-                    //copy();
+                    
+
                     break;
                 }
             }
