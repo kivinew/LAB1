@@ -16,6 +16,7 @@
 int menu(Complex** &, int &);
 void grow(Complex** &, int &);
 void createObj(Complex** &, int &, int number=0);
+void createCopy(Complex** &, int &, int);
 void showTable(Complex** &, int);
 void deleteAll(Complex** &, int);
 
@@ -45,8 +46,8 @@ int menu(Complex** &objectArray, int &size)                                 // в
 
     showTable(objectArray, size);
 
-        cout<<"\t1        - вставить один объект"<<endl                     // меню
-            <<"\tENTER    - выбрать элемент массива"<<endl
+        cout<<"\t1        - быстра€ вставка объекта в пустую строку"<<endl                     // меню
+            <<"\tENTER    - выбрать элемент таблицы"<<endl
             <<"\tESC      - выход из программы"<<endl;
     while (!_kbhit());
     int choice;
@@ -61,16 +62,16 @@ int menu(Complex** &objectArray, int &size)                                 // в
         case ENTER:                                                         // --------выбрать один элемент---------
         {
             int number;
-            cout<<"”кажите номер объекта: ";
+            cout<<"”кажите номер строки: ";
             cin>>number;
             int countObjects = Complex::getCounter();                       // количество объектов в массиве
             if (!(number>=size) && !(number<0))
             {
-                cout<<endl<<"ENTER    - ввести данные в пол€ объекта"<<endl;
+                cout<<endl<<"ENTER    - ввести данные комплексного числа"<<endl;
                 if (objectArray[number]!=NULL)
                 {
-                    cout<<"DELETE   - удалить объект"<<endl
-                        <<"SPACEBAR - скопировать объект"<<endl;
+                    cout<<"DELETE   - удалить комплексное число"<<endl
+                        <<"SPACEBAR - скопировать комплексное число"<<endl;
                 }
                 cout<<"ƒл€ отмены нажмите любую другую клавишу"<<endl;
                 while (!_kbhit());                                                  // ожидание выбора клавиши
@@ -88,8 +89,8 @@ int menu(Complex** &objectArray, int &size)                                 // в
                     Complex::del(objectArray[number]);
                     break;
                 case SPACEBAR:                                              // --------настроить конструктор копировани€---------
-                    
-
+                    if (objectArray[number]!=NULL)
+                        createCopy(objectArray, size, number);
                     break;
                 }
             }
@@ -127,18 +128,33 @@ void grow(Complex** &arr, int &size)                // увеличение массива указат
     return ;
 }
 
-void createObj(Complex** &objectArray, int &size, int elementNumber)
+void createObj(Complex** &arr, int &size, int elementNumber)        // создать объект
 {
-    if (Complex::getCounter()==size)                                        // если количество объектов равно размеру массива
-        grow(objectArray, size);                                            // то его нужно увеличить
+    if (Complex::getCounter()==size)                                // если количество объектов равно размеру массива
+        grow(arr, size);                                            // то его нужно увеличить
     for (int i=elementNumber; i<size; i++)
 	{
-		if (objectArray[i]==NULL)                          	                // если указатель нулевой, то
-        {                                                                   // 
-            objectArray[i] = new Complex();                                 // создать в этой €чейке объект
+		if (arr[i]==NULL)                          	                // если указатель нулевой, то
+        {                                                           // 
+            arr[i] = new Complex(-1, 1);                            // создать в этой €чейке объект
             return;
         }
 	}
+    return;
+}
+
+void createCopy(Complex** &arr, int &size, int elementToCopy)               // скопировать объект
+{
+    if (Complex::getCounter()==size)                                        // если количество объектов равно размеру массива
+        grow(arr, size);                                                    // то его нужно увеличить
+    for (int i = 0; i<size; i++)
+    {
+        if (arr[i]==NULL)                          	                        // если указатель нулевой, то
+        {                                                                   // 
+            arr[i] = new Complex(*arr[elementToCopy]);                      // создать в этой €чейке объект
+            return;
+        }
+    }
     return;
 }
 
@@ -150,7 +166,7 @@ void showTable(Complex** &arr, int size)                                    // в
         cout<<i<<": ";
         if (arr[i]!=NULL)                                                   // если указатель не равен нулю
         {
-            (arr[i])->showObject();                                         // то выводим объект
+            (*arr[i]).showObject();                                         // то выводим объект
         }
         else
             cout<<"empty"<<endl;
