@@ -4,13 +4,13 @@ int Complex::counter;
 int Complex::num;
 double const Complex::pi = 3.1415926536;
 
-Complex::Complex(): real(0), image(1)                       // конструктор по умолчанию
+Complex::Complex(): real(0), image(0)                                   // конструктор по умолчанию
 {
-    objNum = ++num;                                         // добавлю поле с номером объекта
+    objNum = ++num;
     ++counter;
 }
 
-Complex::Complex(int re, int im): real(re), image(im)       // конструктор с параметрами
+Complex::Complex(int re, int im): real(re), image(im)                   // конструктор с параметрами
 {
     objNum = ++num;
     ++counter;
@@ -22,18 +22,19 @@ Complex::Complex(Complex &obj): real(obj.real), image(obj.image)        // ко�
     ++counter;
 }
 
-Complex::~Complex()                                         // деструктор
+Complex::~Complex()                                                     // деструктор
 {
+    --counter;
     cout<<"ДЕСТРУКТОР: id"<<objNum<<" удален."<<endl;
     for (int i = 0; i<200000000; ++i);
 }
 
-int Complex::getCounter()                                   // возврат счётчика
+int Complex::getCounter()                                               // возврат счётчика
 {
     return counter;
 }
 
-void Complex::edit()                                        // редактирование объекта
+void Complex::edit()                                                    // редактирование объекта
 {
     cout<<endl<<"Введите действительную часть Z: real= "<<endl;
     cin>>real;
