@@ -7,3 +7,7 @@
 *.vcxproj
 *.filters
 *.config
+*.opendb
+*.suo
+*.db
+*.sln
