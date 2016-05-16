@@ -1,15 +1,12 @@
-/* Вариант № 9. Комплексные числа.
-Объект класса хранит действительную ( REAL a ) и мнимую ( IMAGE b*i ) часть комплексного числа z = a + b*i.
-Предусмотреть методы вычисления модуля ( вектора ) и аргумента ( угла ).
+п»ї/* Р’Р°СЂРёР°РЅС‚ в„– 9. РљРѕРјРїР»РµРєСЃРЅС‹Рµ С‡РёСЃР»Р°.
+РћР±СЉРµРєС‚ РєР»Р°СЃСЃР° С…СЂР°РЅРёС‚ РґРµР№СЃС‚РІРёС‚РµР»СЊРЅСѓСЋ ( REAL a ) Рё РјРЅРёРјСѓСЋ ( IMAGE b*i ) С‡Р°СЃС‚СЊ РєРѕРјРїР»РµРєСЃРЅРѕРіРѕ С‡РёСЃР»Р° z = a + b*i.
+РџСЂРµРґСѓСЃРјРѕС‚СЂРµС‚СЊ РјРµС‚РѕРґС‹ РІС‹С‡РёСЃР»РµРЅРёСЏ РјРѕРґСѓР»СЏ ( РІРµРєС‚РѕСЂР° ) Рё Р°СЂРіСѓРјРµРЅС‚Р° ( СѓРіР»Р° ).
 */
 
 #include "comPlex.h"
-#include <locale>
-#include <Windows.h>
 #define ESC         27
 #define SPACEBAR    32
 #define ONE         49
-#define TWO         50
 #define ENTER       13
 #define DEL         83 
 
@@ -22,17 +19,16 @@ void deleteAll(Complex** &, int);
 
 int main()
 {
-    setlocale(LC_ALL, "Ru");
+    setlocale(LC_ALL, "Russian");
     SetConsoleTitleA("LAB1: Complex numbers");
 
-    Complex** arrPointers;                                                  // объявление массива указателей
-    int arrSize;                                                            // размер массива
-
-    cout<<"Введите количество объектов (не менее 1): ";
+    Complex** arrPointers;                                                  // РѕР±СЉСЏРІР»РµРЅРёРµ РјР°СЃСЃРёРІР° СѓРєР°Р·Р°С‚РµР»РµР№
+    int arrSize;                                                            // СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°
+    cout<<"Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕР±СЉРµРєС‚РѕРІ (РЅРµ РјРµРЅРµРµ 1): ";
     cin>>arrSize;
     if (arrSize==0)
         arrSize = 1;
-    arrPointers = new Complex* [arrSize]();                                 // определение массива
+    arrPointers = new Complex* [arrSize]();                                 // РѕРїСЂРµРґРµР»РµРЅРёРµ РјР°СЃСЃРёРІР°
     system("cls");
 
     while (menu(arrPointers, arrSize)==TRUE);
@@ -40,55 +36,53 @@ int main()
     return 0;
 }
 
-int menu(Complex** &objectArray, int &size)                                 // вывод таблицы объектов и меню
+int menu(Complex** &objectArray, int &size)                                 // РІС‹РІРѕРґ С‚Р°Р±Р»РёС†С‹ РѕР±СЉРµРєС‚РѕРІ Рё РјРµРЅСЋ
 {
     system("cls");
-
     showTable(objectArray, size);
-
-        cout<<"\t1        - быстрая вставка объекта в пустую строку"<<endl                     // меню
-            <<"\tENTER    - выбрать элемент таблицы"<<endl
-            <<"\tESC      - выход из программы"<<endl;
+        cout<<"\t1        - Р±С‹СЃС‚СЂР°СЏ РІСЃС‚Р°РІРєР° РѕР±СЉРµРєС‚Р° РІ РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ"<<endl	// РјРµРЅСЋ
+            <<"\tENTER    - РІС‹Р±СЂР°С‚СЊ СЌР»РµРјРµРЅС‚ С‚Р°Р±Р»РёС†С‹"<<endl
+            <<"\tESC      - РІС‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹"<<endl;
     while (!_kbhit());
     int choice;
     choice = _getch();
     switch (choice)
     {
-        case ONE:                                                           // ---------вставить объект---------
+        case ONE:                                                           // ---------РІСЃС‚Р°РІРёС‚СЊ РѕР±СЉРµРєС‚---------
         {
             createObj(objectArray, size);
             break;
         }
-        case ENTER:                                                         // --------выбрать один элемент---------
+        case ENTER:                                                         // --------РІС‹Р±СЂР°С‚СЊ РѕРґРёРЅ СЌР»РµРјРµРЅС‚---------
         {
             int number;
-            cout<<"Укажите номер строки: ";
+            cout<<"РЈРєР°Р¶РёС‚Рµ РЅРѕРјРµСЂ СЃС‚СЂРѕРєРё: ";
             cin>>number;
-            int countObjects = Complex::getCounter();                       // количество объектов в массиве
+            int countObjects = Complex::getCounter();                       // РєРѕР»РёС‡РµСЃС‚РІРѕ РѕР±СЉРµРєС‚РѕРІ РІ РјР°СЃСЃРёРІРµ
             if (!(number>=size) && !(number<0))
             {
-                cout<<endl<<"ENTER    - ввести данные комплексного числа"<<endl;
+                cout<<endl<<"ENTER    - РІРІРµСЃС‚Рё РґР°РЅРЅС‹Рµ РєРѕРјРїР»РµРєСЃРЅРѕРіРѕ С‡РёСЃР»Р°"<<endl;
                 if (objectArray[number]!=NULL)
                 {
-                    cout<<"DELETE   - удалить комплексное число"<<endl
-                        <<"SPACEBAR - скопировать комплексное число"<<endl;
+                    cout<<"DELETE   - СѓРґР°Р»РёС‚СЊ РєРѕРјРїР»РµРєСЃРЅРѕРµ С‡РёСЃР»Рѕ"<<endl
+                        <<"SPACEBAR - СЃРєРѕРїРёСЂРѕРІР°С‚СЊ РєРѕРјРїР»РµРєСЃРЅРѕРµ С‡РёСЃР»Рѕ"<<endl;
                 }
-                cout<<"Для отмены нажмите любую другую клавишу"<<endl;
-                while (!_kbhit());                                                  // ожидание выбора клавиши
-                choice = _getch();                                                  // вызывается дважды!!!  1) получаем символ
-                if (choice>83) choice = _getch();                                   //                       2) получаем код символа
+                cout<<"Р”Р»СЏ РѕС‚РјРµРЅС‹ РЅР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РґСЂСѓРіСѓСЋ РєР»Р°РІРёС€Сѓ"<<endl;
+                while (!_kbhit());                                                  // РѕР¶РёРґР°РЅРёРµ РІС‹Р±РѕСЂР° РєР»Р°РІРёС€Рё
+                choice = _getch();                                                  // РІС‹Р·С‹РІР°РµС‚СЃСЏ РґРІР°Р¶РґС‹!!!  1) РїРѕР»СѓС‡Р°РµРј СЃРёРјРІРѕР»
+                if (choice>83) choice = _getch();                                   //                       2) РїРѕР»СѓС‡Р°РµРј РєРѕРґ СЃРёРјРІРѕР»Р°
                 switch (choice)
                 {
-                case ENTER:                                                 // ------изменить объект-------
-                    if (objectArray[number]!=NULL)                          // если указатель не равер нулю
-                        objectArray[number]->edit();                        // то его можно изменить,
+                case ENTER:                                                 // ------РёР·РјРµРЅРёС‚СЊ РѕР±СЉРµРєС‚-------
+                    if (objectArray[number]!=NULL)                          // РµСЃР»Рё СѓРєР°Р·Р°С‚РµР»СЊ РЅРµ СЂР°РІРµСЂ РЅСѓР»СЋ
+                        objectArray[number]->edit();                        // С‚Рѕ РµРіРѕ РјРѕР¶РЅРѕ РёР·РјРµРЅРёС‚СЊ,
                     else                                                    //
-                        createObj(objectArray, size, number);               // а иначе создать
+                        createObj(objectArray, size, number);               // Р° РёРЅР°С‡Рµ СЃРѕР·РґР°С‚СЊ
                     break;
-                case DEL:                                                   // --------удаление указателя на объект---------
+                case DEL:                                                   // --------СѓРґР°Р»РµРЅРёРµ СѓРєР°Р·Р°С‚РµР»СЏ РЅР° РѕР±СЉРµРєС‚---------
                     Complex::del(objectArray[number]);
                     break;
-                case SPACEBAR:                                              // --------настроить конструктор копирования---------
+                case SPACEBAR:                                              // --------РЅР°СЃС‚СЂРѕРёС‚СЊ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ---------
                     if (objectArray[number]!=NULL)
                         createCopy(objectArray, size, number);
                     break;
@@ -96,12 +90,12 @@ int menu(Complex** &objectArray, int &size)                                 // в
             }
             else
             {
-                cout<<"Выход за пределы массива!";
+                cout<<"Р’С‹С…РѕРґ Р·Р° РїСЂРµРґРµР»С‹ РјР°СЃСЃРёРІР°!";
                 _getch();
             }
             break;
         }
-        case ESC:                                                           // ---------выход из программы---------
+        case ESC:                                                           // ---------РІС‹С…РѕРґ РёР· РїСЂРѕРіСЂР°РјРјС‹---------
             deleteAll(objectArray, size);
             return FALSE;
             break;
@@ -109,78 +103,78 @@ int menu(Complex** &objectArray, int &size)                                 // в
     return TRUE;
 }
 
-void grow(Complex** &arr, int &size)                // увеличение массива указателей в два раза
+void grow(Complex** &arr, int &size)                // СѓРІРµР»РёС‡РµРЅРёРµ РјР°СЃСЃРёРІР° СѓРєР°Р·Р°С‚РµР»РµР№ РІ РґРІР° СЂР°Р·Р°
 {
-    int newSize;                                    // новый размер массива
+    int newSize;                                    // РЅРѕРІС‹Р№ СЂР°Р·РјРµСЂ РјР°СЃСЃРёРІР°
     newSize = size*2;
-    Complex** newArr;                               // новый массив
+    Complex** newArr;                               // РЅРѕРІС‹Р№ РјР°СЃСЃРёРІ
     newArr = new Complex*[newSize];
     for (int i = 0; i<newSize; i++)
     {
-        if (i<size)                                 // значения элементов старого массива
-            newArr[i] = arr[i];                     // присваиваем элементам нового
+        if (i<size)                                 // Р·РЅР°С‡РµРЅРёСЏ СЌР»РµРјРµРЅС‚РѕРІ СЃС‚Р°СЂРѕРіРѕ РјР°СЃСЃРёРІР°
+            newArr[i] = arr[i];                     // РїСЂРёСЃРІР°РёРІР°РµРј СЌР»РµРјРµРЅС‚Р°Рј РЅРѕРІРѕРіРѕ
         else
             newArr[i] = NULL;                       
     }
-    delete [] arr;                                  // удалён старый массив
-    arr = newArr;                                   // и его указателю присвоен новый
+    delete [] arr;                                  // СѓРґР°Р»С‘РЅ СЃС‚Р°СЂС‹Р№ РјР°СЃСЃРёРІ
+    arr = newArr;                                   // Рё РµРіРѕ СѓРєР°Р·Р°С‚РµР»СЋ РїСЂРёСЃРІРѕРµРЅ РЅРѕРІС‹Р№
     size = newSize;
     return ;
 }
 
-void createObj(Complex** &arr, int &size, int elementNumber)        // создать объект
+void createObj(Complex** &arr, int &size, int elementNumber)        // СЃРѕР·РґР°С‚СЊ РѕР±СЉРµРєС‚
 {
-    if (Complex::getCounter()==size)                                // если количество объектов равно размеру массива
-        grow(arr, size);                                            // то его нужно увеличить
+    if (Complex::getCounter()==size)                                // РµСЃР»Рё РєРѕР»РёС‡РµСЃС‚РІРѕ РѕР±СЉРµРєС‚РѕРІ СЂР°РІРЅРѕ СЂР°Р·РјРµСЂСѓ РјР°СЃСЃРёРІР°
+        grow(arr, size);                                            // С‚Рѕ РµРіРѕ РЅСѓР¶РЅРѕ СѓРІРµР»РёС‡РёС‚СЊ
     for (int i=elementNumber; i<size; i++)
 	{
-		if (arr[i]==NULL)                          	                // если указатель нулевой, то
+		if (arr[i]==NULL)                          	                // РµСЃР»Рё СѓРєР°Р·Р°С‚РµР»СЊ РЅСѓР»РµРІРѕР№, С‚Рѕ
         {                                                           // 
-            arr[i] = new Complex(-1, 1);                            // создать в этой ячейке объект
+            arr[i] = new Complex(-1, 1);                            // СЃРѕР·РґР°С‚СЊ РІ СЌС‚РѕР№ СЏС‡РµР№РєРµ РѕР±СЉРµРєС‚
             return;
         }
 	}
     return;
 }
 
-void createCopy(Complex** &arr, int &size, int elementToCopy)               // скопировать объект
+void createCopy(Complex** &arr, int &size, int elementToCopy)               // СЃРєРѕРїРёСЂРѕРІР°С‚СЊ РѕР±СЉРµРєС‚
 {
-    if (Complex::getCounter()==size)                                        // если количество объектов равно размеру массива
-        grow(arr, size);                                                    // то его нужно увеличить
+    if (Complex::getCounter()==size)                                        // РµСЃР»Рё РєРѕР»РёС‡РµСЃС‚РІРѕ РѕР±СЉРµРєС‚РѕРІ СЂР°РІРЅРѕ СЂР°Р·РјРµСЂСѓ РјР°СЃСЃРёРІР°
+        grow(arr, size);                                                    // С‚Рѕ РµРіРѕ РЅСѓР¶РЅРѕ СѓРІРµР»РёС‡РёС‚СЊ
     for (int i = 0; i<size; i++)
     {
-        if (arr[i]==NULL)                          	                        // если указатель нулевой, то
+        if (arr[i]==NULL)                          	                        // РµСЃР»Рё СѓРєР°Р·Р°С‚РµР»СЊ РЅСѓР»РµРІРѕР№, С‚Рѕ
         {                                                                   // 
-            arr[i] = new Complex(*arr[elementToCopy]);                      // создать в этой ячейке объект
+            arr[i] = new Complex(*arr[elementToCopy]);                      // СЃРѕР·РґР°С‚СЊ РІ СЌС‚РѕР№ СЏС‡РµР№РєРµ РѕР±СЉРµРєС‚
             return;
         }
     }
     return;
 }
 
-void showTable(Complex** &arr, int size)                                    // вывод таблицы объектов
+void showTable(Complex** &arr, int size)                                    // РІС‹РІРѕРґ С‚Р°Р±Р»РёС†С‹ РѕР±СЉРµРєС‚РѕРІ
 {
-    cout<<"Объект :\t"<<"Модуль :\t"<<"Аргумент :\t"<<endl;
+    cout<<"РћР±СЉРµРєС‚ :\t"<<"РњРѕРґСѓР»СЊ :\t"<<"РђСЂРіСѓРјРµРЅС‚ :\t"<<endl;
     for (int i = 0; i<size; i++)
     {
         cout<<i<<": ";
-        if (arr[i]!=NULL)                                                   // если указатель не равен нулю
+        if (arr[i]!=NULL)                                                   // РµСЃР»Рё СѓРєР°Р·Р°С‚РµР»СЊ РЅРµ СЂР°РІРµРЅ РЅСѓР»СЋ
         {
-            (*arr[i]).showObject();                                         // то выводим объект
+            arr[i]->showObject();											// С‚Рѕ РІС‹РІРѕРґРёРј РѕР±СЉРµРєС‚
         }
         else
             cout<<"empty"<<endl;
     }
 }
 
-void deleteAll(Complex** &arr, int size)                // удаление массива
+void deleteAll(Complex** &arr, int size)                // СѓРґР°Р»РµРЅРёРµ РјР°СЃСЃРёРІР°
 {
     for (int i = 0; i<size; i++)
     {
-        Complex::del(arr[i]);                           // удаление объектов массива
+        Complex::del(arr[i]);                           // СѓРґР°Р»РµРЅРёРµ РѕР±СЉРµРєС‚РѕРІ РјР°СЃСЃРёРІР°
     }
-    delete[] arr;                                       // удаление массива
-    cout<<"Массив удалён"<<endl;
+    delete[] arr;                                       // СѓРґР°Р»РµРЅРёРµ РјР°СЃСЃРёРІР°
+    cout<<"РњР°СЃСЃРёРІ СѓРґР°Р»С‘РЅ"<<endl;
     _getch();
     return;
 }

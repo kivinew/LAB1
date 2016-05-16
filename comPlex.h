@@ -1,15 +1,15 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <conio.h>
 #include <math.h>
+#include <Windows.h>
+#include <locale>
 using namespace std;
 
 class Complex
 {
     static double const pi ;
     static int counter;
-    static int num;
-    int objNum;
     double real, image;
 public:
     Complex();
